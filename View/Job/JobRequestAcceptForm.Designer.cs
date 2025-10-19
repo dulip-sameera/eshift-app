@@ -44,13 +44,15 @@
             lblEstimatedCost = new Label();
             txtEstimatedCost = new TextBox();
             btnReject = new Button();
-            dataGridView1 = new DataGridView();
+            dgLoads = new DataGridView();
+            lblLoad = new Label();
             LoadID = new DataGridViewTextBoxColumn();
+            Id = new DataGridViewTextBoxColumn();
             Description = new DataGridViewTextBoxColumn();
             Volume = new DataGridViewTextBoxColumn();
             Weight = new DataGridViewTextBoxColumn();
-            lblLoad = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            JobId = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dgLoads).BeginInit();
             SuspendLayout();
             // 
             // btnCancel
@@ -225,36 +227,16 @@
             btnReject.UseVisualStyleBackColor = false;
             btnReject.Click += btnReject_Click;
             // 
-            // dataGridView1
+            // dgLoads
             // 
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.BackgroundColor = Color.Azure;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { LoadID, Description, Volume, Weight });
-            dataGridView1.Location = new Point(466, 146);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(672, 562);
-            dataGridView1.TabIndex = 130;
-            // 
-            // LoadID
-            // 
-            LoadID.HeaderText = "Load ID";
-            LoadID.Name = "LoadID";
-            // 
-            // Description
-            // 
-            Description.HeaderText = "Description";
-            Description.Name = "Description";
-            // 
-            // Volume
-            // 
-            Volume.HeaderText = "Volume";
-            Volume.Name = "Volume";
-            // 
-            // Weight
-            // 
-            Weight.HeaderText = "Weight";
-            Weight.Name = "Weight";
+            dgLoads.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgLoads.BackgroundColor = Color.Azure;
+            dgLoads.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgLoads.Columns.AddRange(new DataGridViewColumn[] { LoadID, Id, Description, Volume, Weight, JobId });
+            dgLoads.Location = new Point(466, 146);
+            dgLoads.Name = "dgLoads";
+            dgLoads.Size = new Size(672, 562);
+            dgLoads.TabIndex = 130;
             // 
             // lblLoad
             // 
@@ -266,6 +248,44 @@
             lblLoad.TabIndex = 131;
             lblLoad.Text = "Loads";
             // 
+            // LoadID
+            // 
+            LoadID.DataPropertyName = "LoadId";
+            LoadID.HeaderText = "Load ID";
+            LoadID.Name = "LoadID";
+            // 
+            // Id
+            // 
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Id";
+            Id.Name = "Id";
+            Id.Visible = false;
+            // 
+            // Description
+            // 
+            Description.DataPropertyName = "Description";
+            Description.HeaderText = "Description";
+            Description.Name = "Description";
+            // 
+            // Volume
+            // 
+            Volume.DataPropertyName = "Volume";
+            Volume.HeaderText = "Volume";
+            Volume.Name = "Volume";
+            // 
+            // Weight
+            // 
+            Weight.DataPropertyName = "Weight";
+            Weight.HeaderText = "Weight";
+            Weight.Name = "Weight";
+            // 
+            // JobId
+            // 
+            JobId.DataPropertyName = "JobId";
+            JobId.HeaderText = "JobId";
+            JobId.Name = "JobId";
+            JobId.Visible = false;
+            // 
             // JobRequestAcceptForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -273,7 +293,7 @@
             BackColor = Color.Azure;
             ClientSize = new Size(1167, 750);
             Controls.Add(lblLoad);
-            Controls.Add(dataGridView1);
+            Controls.Add(dgLoads);
             Controls.Add(btnReject);
             Controls.Add(txtEstimatedCost);
             Controls.Add(lblEstimatedCost);
@@ -295,7 +315,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Job Request Accept";
             Load += JobRequestAcceptForm_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgLoads).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -320,11 +340,13 @@
         private Label lblEstimatedCost;
         private TextBox txtEstimatedCost;
         private Button btnReject;
-        private DataGridView dataGridView1;
+        private DataGridView dgLoads;
         private Label lblLoad;
         private DataGridViewTextBoxColumn LoadID;
+        private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn Description;
         private DataGridViewTextBoxColumn Volume;
         private DataGridViewTextBoxColumn Weight;
+        private DataGridViewTextBoxColumn JobId;
     }
 }

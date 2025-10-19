@@ -14,5 +14,6 @@ namespace eshift.Controller
         void DeleteUserAccount(UserGridDto userGridDto);
         bool CreateUser(UserCreateFromDto userCreateFromDto);
         bool UpdateUser(UserUpdateFormDto userUpdateFormDto);
+        bool Login(LoginCredentialsDto loginCredentials);
     }
 }

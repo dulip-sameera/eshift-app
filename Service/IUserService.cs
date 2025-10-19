@@ -18,5 +18,7 @@ namespace eshift.Service
         bool CreateUser(UserCreateFromDto userCreateFromDto);
 
         bool UpdateUser(UserUpdateFormDto userUpdateFormDto);
+
+        bool Login(LoginCredentialsDto loginCredentials);
     }
 }

@@ -254,5 +254,63 @@ namespace eshift.Service.Impl
                 throw;
             }
         }
+
+        public bool Login(LoginCredentialsDto loginCredentials)
+        {
+            try
+            {
+                // Get existing user by username
+                var user = userDao.GetUserByUsername(loginCredentials.Username);
+                if (user == null)
+                {
+                    throw new Exception("Invalid username or password.");
+                }
+
+                // Validate password
+                if (!PasswordUtil.ValidatePassword(loginCredentials.Password, user.Password))
+                {
+                    throw new Exception("Invalid username or password.");
+                }
+
+                // Check user status based on role
+                string specialId;
+                string FullName;
+                if (user.Role?.Id == (int)UserRoleEnum.CUSTOMER)
+                {
+                    var customer = customerDao.GetCustomerByUseraccount(user.Id);
+                    if (customer == null || customer.Status.Id == (int)CustomerStatusEnum.DELETED)
+                    {
+                        throw new Exception("No active account found for this user.");
+                    }
+                    specialId = customer.CusId;
+                    FullName = $"{customer.FirstName} {customer.LastName}";
+                }
+                else if (user.Role?.Id == (int)UserRoleEnum.ADMIN)
+                {
+                    var staff = staffDao.GetStaffByUseraccount(user.Id);
+                    if (staff == null || staff.Status == StaffStatusEnum.DELETED)
+                    {
+                        throw new Exception("No active account found for this user.");
+                    }
+                    specialId = staff.StaffId;
+                    FullName = $"{staff.FirstName} {staff.LastName}";
+                }
+                else
+                {
+                    throw new Exception("Invalid user role.");
+                }
+
+                // Set user session
+                var userRole = user.Role.Id == (int)UserRoleEnum.CUSTOMER ? UserRoleEnum.CUSTOMER : UserRoleEnum.ADMIN;
+                UserSession.SetUserSession(user.Id, specialId, user.Username, userRole, FullName);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in Login: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

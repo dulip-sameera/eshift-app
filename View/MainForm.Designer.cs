@@ -35,6 +35,8 @@
             txtPassword = new TextBox();
             btnLogin = new Button();
             btnExit = new Button();
+            lblUsernameErrorMessage = new Label();
+            lblPasswordErrorMessage = new Label();
             SuspendLayout();
             // 
             // lblEShift
@@ -116,12 +118,34 @@
             btnExit.UseVisualStyleBackColor = false;
             btnExit.Click += btnExit_Click;
             // 
+            // lblUsernameErrorMessage
+            // 
+            lblUsernameErrorMessage.AutoSize = true;
+            lblUsernameErrorMessage.ForeColor = Color.Red;
+            lblUsernameErrorMessage.Location = new Point(155, 149);
+            lblUsernameErrorMessage.Name = "lblUsernameErrorMessage";
+            lblUsernameErrorMessage.Size = new Size(81, 15);
+            lblUsernameErrorMessage.TabIndex = 7;
+            lblUsernameErrorMessage.Text = "error message";
+            // 
+            // lblPasswordErrorMessage
+            // 
+            lblPasswordErrorMessage.AutoSize = true;
+            lblPasswordErrorMessage.ForeColor = Color.Red;
+            lblPasswordErrorMessage.Location = new Point(154, 205);
+            lblPasswordErrorMessage.Name = "lblPasswordErrorMessage";
+            lblPasswordErrorMessage.Size = new Size(81, 15);
+            lblPasswordErrorMessage.TabIndex = 8;
+            lblPasswordErrorMessage.Text = "error message";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
             ClientSize = new Size(461, 333);
+            Controls.Add(lblPasswordErrorMessage);
+            Controls.Add(lblUsernameErrorMessage);
             Controls.Add(btnExit);
             Controls.Add(btnLogin);
             Controls.Add(txtPassword);
@@ -147,5 +171,7 @@
         private TextBox txtPassword;
         private Button btnLogin;
         private Button btnExit;
+        private Label lblUsernameErrorMessage;
+        private Label lblPasswordErrorMessage;
     }
 }

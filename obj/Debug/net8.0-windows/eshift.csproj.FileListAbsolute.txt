@@ -122,3 +122,4 @@ D:\lmu\ad\cw-1\work\eshift\obj\Debug\net8.0-windows\refint\eshift.dll
 D:\lmu\ad\cw-1\work\eshift\obj\Debug\net8.0-windows\eshift.pdb
 D:\lmu\ad\cw-1\work\eshift\obj\Debug\net8.0-windows\eshift.genruntimeconfig.cache
 D:\lmu\ad\cw-1\work\eshift\obj\Debug\net8.0-windows\ref\eshift.dll
+D:\lmu\ad\cw-1\work\eshift\obj\Debug\net8.0-windows\eshift.sourcelink.json

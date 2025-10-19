@@ -101,6 +101,7 @@
             Name = "CustomerDashboardForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Customer Dashboard";
+            Load += CustomerDashboardForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

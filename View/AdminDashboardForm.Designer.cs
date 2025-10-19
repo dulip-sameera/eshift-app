@@ -197,6 +197,7 @@
             Name = "AdminDashboardForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Admin Dashboard";
+            Load += AdminDashboardForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

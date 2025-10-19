@@ -11,5 +11,8 @@ namespace eshift.Dao
         bool UpdateJobStatusByJobId(string jobId, int statusId);
         bool UpdateJob(string jobId, JobModel model);
         void CreateJob(string jobId, CreateJobFormDto dto, int statusId);
+        List<JobModel> GetJobsByStatus(string status);
+        List<JobModel> FilterJobsByJobId(string jobId);
+        JobWithLoadsDto? GetJobWithLoadsByJobId(string jobId);
     }
 }

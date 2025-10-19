@@ -17,6 +17,13 @@ namespace eshift.Dto
 
         public JobDto() { }
 
+        public JobDto(string jobId, double estimatedCost, int status)
+        {
+            JobId = jobId;
+            EstimatedCost = estimatedCost;
+            StatusId = status;
+        }
+
         public JobDto(int? id, string jobId, string pickupLocation, string deliveryLocation, DateTime scheduledDate,
             double? estimatedCost, double? actualCost, int statusId, int customerId, string? description)
         {

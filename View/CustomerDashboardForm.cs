@@ -1,14 +1,6 @@
-﻿using eshift.View.Job;
+﻿using eshift.Utils;
+using eshift.View.Job;
 using eshift.View.UserAccount;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace eshift.View
 {
@@ -45,6 +37,7 @@ namespace eshift.View
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
+            UserSession.Clear();
             this.Hide();
             MainForm mainForm = new MainForm();
             mainForm.FormClosed += (s, args) =>
@@ -53,6 +46,11 @@ namespace eshift.View
                 Application.Exit();
             };
             mainForm.Show();
+        }
+
+        private void CustomerDashboardForm_Load(object sender, EventArgs e)
+        {
+            lblWelcomeMessage.Text = $"Welcome, {UserSession.FullName}!";
         }
     }
 }

@@ -38,6 +38,8 @@
             txtJobSearch = new TextBox();
             lblJobId = new Label();
             dgJob = new DataGridView();
+            lblFormTitle = new Label();
+            btnRefresh = new Button();
             JobID = new DataGridViewTextBoxColumn();
             Customer = new DataGridViewTextBoxColumn();
             PickUp = new DataGridViewTextBoxColumn();
@@ -47,8 +49,6 @@
             EstimatedCost = new DataGridViewTextBoxColumn();
             ActualCost = new DataGridViewTextBoxColumn();
             Status = new DataGridViewTextBoxColumn();
-            lblFormTitle = new Label();
-            btnRefresh = new Button();
             ((System.ComponentModel.ISupportInitialize)dgJob).BeginInit();
             SuspendLayout();
             // 
@@ -169,51 +169,6 @@
             dgJob.Size = new Size(1089, 445);
             dgJob.TabIndex = 28;
             // 
-            // JobID
-            // 
-            JobID.HeaderText = "JobID";
-            JobID.Name = "JobID";
-            // 
-            // Customer
-            // 
-            Customer.HeaderText = "Customer";
-            Customer.Name = "Customer";
-            // 
-            // PickUp
-            // 
-            PickUp.HeaderText = "PickUp";
-            PickUp.Name = "PickUp";
-            // 
-            // Delivery
-            // 
-            Delivery.HeaderText = "Delivery";
-            Delivery.Name = "Delivery";
-            // 
-            // Description
-            // 
-            Description.HeaderText = "Description";
-            Description.Name = "Description";
-            // 
-            // ScheduledDate
-            // 
-            ScheduledDate.HeaderText = "Scheduled Date";
-            ScheduledDate.Name = "ScheduledDate";
-            // 
-            // EstimatedCost
-            // 
-            EstimatedCost.HeaderText = "Estimated Cost";
-            EstimatedCost.Name = "EstimatedCost";
-            // 
-            // ActualCost
-            // 
-            ActualCost.HeaderText = "Actual Cost";
-            ActualCost.Name = "ActualCost";
-            // 
-            // Status
-            // 
-            Status.HeaderText = "Status";
-            Status.Name = "Status";
-            // 
             // lblFormTitle
             // 
             lblFormTitle.AutoSize = true;
@@ -239,6 +194,60 @@
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = false;
             btnRefresh.Click += btnRefresh_Click;
+            // 
+            // JobID
+            // 
+            JobID.DataPropertyName = "JobID";
+            JobID.HeaderText = "Job ID";
+            JobID.Name = "JobID";
+            // 
+            // Customer
+            // 
+            Customer.DataPropertyName = "Customer";
+            Customer.HeaderText = "Customer";
+            Customer.Name = "Customer";
+            // 
+            // PickUp
+            // 
+            PickUp.DataPropertyName = "PickUp";
+            PickUp.HeaderText = "Pick Up";
+            PickUp.Name = "PickUp";
+            // 
+            // Delivery
+            // 
+            Delivery.DataPropertyName = "Delivery";
+            Delivery.HeaderText = "Delivery";
+            Delivery.Name = "Delivery";
+            // 
+            // Description
+            // 
+            Description.DataPropertyName = "Description";
+            Description.HeaderText = "Description";
+            Description.Name = "Description";
+            // 
+            // ScheduledDate
+            // 
+            ScheduledDate.DataPropertyName = "ScheduledDate";
+            ScheduledDate.HeaderText = "Scheduled Date";
+            ScheduledDate.Name = "ScheduledDate";
+            // 
+            // EstimatedCost
+            // 
+            EstimatedCost.DataPropertyName = "EstimatedCost";
+            EstimatedCost.HeaderText = "Estimated Cost";
+            EstimatedCost.Name = "EstimatedCost";
+            // 
+            // ActualCost
+            // 
+            ActualCost.DataPropertyName = "ActualCost";
+            ActualCost.HeaderText = "Actual Cost";
+            ActualCost.Name = "ActualCost";
+            // 
+            // Status
+            // 
+            Status.DataPropertyName = "Status";
+            Status.HeaderText = "Status";
+            Status.Name = "Status";
             // 
             // JobForm
             // 
@@ -278,6 +287,7 @@
         private Label lblJobId;
         private DataGridView dgJob;
         private Label lblFormTitle;
+        private Button btnRefresh;
         private DataGridViewTextBoxColumn JobID;
         private DataGridViewTextBoxColumn Customer;
         private DataGridViewTextBoxColumn PickUp;
@@ -287,6 +297,5 @@
         private DataGridViewTextBoxColumn EstimatedCost;
         private DataGridViewTextBoxColumn ActualCost;
         private DataGridViewTextBoxColumn Status;
-        private Button btnRefresh;
     }
 }

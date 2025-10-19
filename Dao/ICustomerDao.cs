@@ -12,6 +12,7 @@ namespace eshift.Dao
         bool UpdateCustomer(string cusId, CustomerModel customer);
         string? GetLastCustomerId();
         CustomerModel? GetCustomerByCusId(string cusId);
-        CustomerModel? GetCustomerByUseraccount(int userAccount); 
+        CustomerModel? GetCustomerByUseraccount(int userAccount);
+        CustomerModel? GetCustomerById(int id); 
     }
 }

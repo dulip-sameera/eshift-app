@@ -1,4 +1,5 @@
-﻿using eshift.View.Customer;
+﻿using eshift.Utils;
+using eshift.View.Customer;
 using eshift.View.Job;
 using eshift.View.Report;
 using eshift.View.Staff;
@@ -59,7 +60,7 @@ namespace eshift.View
             jobForm.Show();
         }
 
-        private void btnReports_Click(object sender, EventArgs e) 
+        private void btnReports_Click(object sender, EventArgs e)
         {
             this.Hide();
             ReportForm reportForm = new ReportForm();
@@ -71,7 +72,7 @@ namespace eshift.View
             reportForm.Show();
         }
 
-        private void btnCustomer_Click(object sender, EventArgs e) 
+        private void btnCustomer_Click(object sender, EventArgs e)
         {
             this.Hide();
             CustomerForm customerForm = new CustomerForm();
@@ -121,6 +122,7 @@ namespace eshift.View
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
+            UserSession.Clear();
             this.Hide();
             MainForm mainForm = new MainForm();
             mainForm.FormClosed += (s, args) =>
@@ -129,6 +131,11 @@ namespace eshift.View
                 Application.Exit();
             };
             mainForm.Show();
+        }
+
+        private void AdminDashboardForm_Load(object sender, EventArgs e)
+        {
+            lblWelcomeMessage.Text = $"Welcome, {UserSession.FullName}!";
         }
     }
 }

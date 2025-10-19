@@ -33,10 +33,6 @@
             txtJobRequestSearch = new TextBox();
             lblJobId = new Label();
             dgJobRequest = new DataGridView();
-            lblFormTitle = new Label();
-            btnAccept = new Button();
-            btnReject = new Button();
-            btnRefresh = new Button();
             JobID = new DataGridViewTextBoxColumn();
             Customer = new DataGridViewTextBoxColumn();
             PickUp = new DataGridViewTextBoxColumn();
@@ -46,6 +42,10 @@
             EstimatedCost = new DataGridViewTextBoxColumn();
             Status = new DataGridViewTextBoxColumn();
             ActualCost = new DataGridViewTextBoxColumn();
+            lblFormTitle = new Label();
+            btnAccept = new Button();
+            btnReject = new Button();
+            btnRefresh = new Button();
             ((System.ComponentModel.ISupportInitialize)dgJobRequest).BeginInit();
             SuspendLayout();
             // 
@@ -99,14 +99,73 @@
             // 
             // dgJobRequest
             // 
+            dgJobRequest.AllowUserToDeleteRows = false;
+            dgJobRequest.AllowUserToOrderColumns = true;
             dgJobRequest.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgJobRequest.BackgroundColor = Color.Azure;
             dgJobRequest.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgJobRequest.Columns.AddRange(new DataGridViewColumn[] { JobID, Customer, PickUp, Delivery, Description, ScheduledDate, EstimatedCost, Status, ActualCost });
             dgJobRequest.Location = new Point(16, 84);
+            dgJobRequest.MultiSelect = false;
             dgJobRequest.Name = "dgJobRequest";
+            dgJobRequest.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgJobRequest.Size = new Size(1089, 445);
             dgJobRequest.TabIndex = 28;
+            // 
+            // JobID
+            // 
+            JobID.DataPropertyName = "JobID";
+            JobID.HeaderText = "Job ID";
+            JobID.Name = "JobID";
+            // 
+            // Customer
+            // 
+            Customer.DataPropertyName = "Customer";
+            Customer.HeaderText = "Customer";
+            Customer.Name = "Customer";
+            // 
+            // PickUp
+            // 
+            PickUp.DataPropertyName = "PickUp";
+            PickUp.HeaderText = "PickUp";
+            PickUp.Name = "PickUp";
+            // 
+            // Delivery
+            // 
+            Delivery.DataPropertyName = "Delivery";
+            Delivery.HeaderText = "Delivery";
+            Delivery.Name = "Delivery";
+            // 
+            // Description
+            // 
+            Description.DataPropertyName = "Description";
+            Description.HeaderText = "Description";
+            Description.Name = "Description";
+            // 
+            // ScheduledDate
+            // 
+            ScheduledDate.DataPropertyName = "ScheduledDate";
+            ScheduledDate.HeaderText = "Scheduled Date";
+            ScheduledDate.Name = "ScheduledDate";
+            // 
+            // EstimatedCost
+            // 
+            EstimatedCost.DataPropertyName = "EstimatedCost";
+            EstimatedCost.HeaderText = "Estimated Cost";
+            EstimatedCost.Name = "EstimatedCost";
+            // 
+            // Status
+            // 
+            Status.DataPropertyName = "Status";
+            Status.HeaderText = "Status";
+            Status.Name = "Status";
+            // 
+            // ActualCost
+            // 
+            ActualCost.DataPropertyName = "ActualCost";
+            ActualCost.HeaderText = "Actual Cost";
+            ActualCost.Name = "ActualCost";
+            ActualCost.Visible = false;
             // 
             // lblFormTitle
             // 
@@ -163,61 +222,6 @@
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = false;
             btnRefresh.Click += btnRefresh_Click;
-            // 
-            // JobID
-            // 
-            JobID.DataPropertyName = "JobID";
-            JobID.HeaderText = "Job ID";
-            JobID.Name = "JobID";
-            // 
-            // Customer
-            // 
-            Customer.DataPropertyName = "Customer";
-            Customer.HeaderText = "Customer";
-            Customer.Name = "Customer";
-            // 
-            // PickUp
-            // 
-            PickUp.DataPropertyName = "PickUp";
-            PickUp.HeaderText = "PickUp";
-            PickUp.Name = "PickUp";
-            // 
-            // Delivery
-            // 
-            Delivery.DataPropertyName = "Delivery";
-            Delivery.HeaderText = "Delivery";
-            Delivery.Name = "Delivery";
-            // 
-            // Description
-            // 
-            Description.DataPropertyName = "Description";
-            Description.HeaderText = "Description";
-            Description.Name = "Description";
-            // 
-            // ScheduledDate
-            // 
-            ScheduledDate.DataPropertyName = "ScheduledDate";
-            ScheduledDate.HeaderText = "Scheduled Date";
-            ScheduledDate.Name = "ScheduledDate";
-            // 
-            // EstimatedCost
-            // 
-            EstimatedCost.DataPropertyName = "EstimatedCost";
-            EstimatedCost.HeaderText = "Estimated Cost";
-            EstimatedCost.Name = "EstimatedCost";
-            // 
-            // Status
-            // 
-            Status.DataPropertyName = "Status";
-            Status.HeaderText = "Status";
-            Status.Name = "Status";
-            // 
-            // ActualCost
-            // 
-            ActualCost.DataPropertyName = "ActualCost";
-            ActualCost.HeaderText = "Actual Cost";
-            ActualCost.Name = "ActualCost";
-            ActualCost.Visible = false;
             // 
             // JobRequestForm
             // 

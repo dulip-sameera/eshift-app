@@ -132,7 +132,7 @@ namespace eshift.Dao.Impl
                 // Insert loads
                 foreach (var load in dto.Loads)
                 {
-                    string loadQuery = @"INSERT INTO load (load_id, description, volume, weight, job) VALUES (@loadId, @description, @volume, @weight, @job)";
+                    string loadQuery = @"INSERT INTO `load` (load_id, description, volume, weight, job) VALUES (@loadId, @description, @volume, @weight, @job)";
                     using var loadCmd = new MySqlCommand(loadQuery, conn, transaction);
                     loadCmd.Parameters.AddWithValue("@loadId", load.LoadId);
                     loadCmd.Parameters.AddWithValue("@description", load.Description);
@@ -156,6 +156,162 @@ namespace eshift.Dao.Impl
             {
                 transaction.Rollback();
                 throw;
+            }
+        }
+
+        public List<JobModel> GetJobsByStatus(string status)
+        {
+            var list = new List<JobModel>();
+            var conn = DatabaseConnection.Instance.Connection;
+            string query = @"SELECT j.id, j.job_id, j.pickup_location, j.delivery_location, j.scheduled_date, j.estimated_cost, j.actual_cost, j.status, j.customer, j.description
+                             FROM job j
+                             JOIN job_status s ON j.status = s.id
+                             WHERE s.name = @status";
+            try
+            {
+                using var cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@status", status);
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var jobModel = new JobModel(
+                        reader.GetInt32("id"),
+                        reader.GetString("job_id"),
+                        reader.GetString("pickup_location"),
+                        reader.GetString("delivery_location"),
+                        reader.GetDateTime("scheduled_date"),
+                        reader.IsDBNull(reader.GetOrdinal("estimated_cost")) ? null : reader.GetDouble("estimated_cost"),
+                        reader.IsDBNull(reader.GetOrdinal("actual_cost")) ? null : reader.GetDouble("actual_cost"),
+                        reader.GetInt32("status"),
+                        reader.GetInt32("customer"),
+                        reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString("description")
+                    );
+                    list.Add(jobModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetJobsByStatus: {ex.Message}");
+                throw;
+            }
+            return list;
+        }
+
+        public List<JobModel> FilterJobsByJobId(string jobId)
+        {
+            var list = new List<JobModel>();
+            var conn = DatabaseConnection.Instance.Connection;
+            string query = @"SELECT j.id, j.job_id, j.pickup_location, j.delivery_location, j.scheduled_date, j.estimated_cost, j.actual_cost, j.status, j.customer, j.description
+                             FROM job j
+                             WHERE j.job_id LIKE @jobId";
+            try
+            {
+                using var cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@jobId", $"%{jobId}%");
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var jobModel = new JobModel(
+                        reader.GetInt32("id"),
+                        reader.GetString("job_id"),
+                        reader.GetString("pickup_location"),
+                        reader.GetString("delivery_location"),
+                        reader.GetDateTime("scheduled_date"),
+                        reader.IsDBNull(reader.GetOrdinal("estimated_cost")) ? null : reader.GetDouble("estimated_cost"),
+                        reader.IsDBNull(reader.GetOrdinal("actual_cost")) ? null : reader.GetDouble("actual_cost"),
+                        reader.GetInt32("status"),
+                        reader.GetInt32("customer"),
+                        reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString("description")
+                    );
+                    list.Add(jobModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in FilterJobsByJobId: {ex.Message}");
+                throw;
+            }
+            return list;
+        }
+
+        public JobWithLoadsDto? GetJobWithLoadsByJobId(string jobId)
+        {
+            var conn = DatabaseConnection.Instance.Connection;
+            try
+            {
+                // First get the job with customer CusId
+                JobModel? job = null;
+                string customerCusId = string.Empty;
+                string jobQuery = @"SELECT j.id, j.job_id, j.pickup_location, j.delivery_location, j.scheduled_date, j.estimated_cost, j.actual_cost, j.status, j.customer, j.description, c.cus_id
+                                   FROM job j
+                                   JOIN customer c ON j.customer = c.id
+                                   WHERE j.job_id = @jobId LIMIT 1";
+                
+                using (var jobCmd = new MySqlCommand(jobQuery, conn))
+                {
+                    jobCmd.Parameters.AddWithValue("@jobId", jobId);
+                    using var jobReader = jobCmd.ExecuteReader();
+                    if (jobReader.Read())
+                    {
+                        job = new JobModel(
+                            jobReader.GetInt32("id"),
+                            jobReader.GetString("job_id"),
+                            jobReader.GetString("pickup_location"),
+                            jobReader.GetString("delivery_location"),
+                            jobReader.GetDateTime("scheduled_date"),
+                            jobReader.IsDBNull(jobReader.GetOrdinal("estimated_cost")) ? null : jobReader.GetDouble("estimated_cost"),
+                            jobReader.IsDBNull(jobReader.GetOrdinal("actual_cost")) ? null : jobReader.GetDouble("actual_cost"),
+                            jobReader.GetInt32("status"),
+                            jobReader.GetInt32("customer"),
+                            jobReader.IsDBNull(jobReader.GetOrdinal("description")) ? null : jobReader.GetString("description")
+                        );
+                        customerCusId = jobReader.GetString("cus_id");
+                    }
+                }
+
+                if (job == null)
+                {
+                    return null;
+                }
+
+                // Get loads for the job
+                var loads = new List<LoadDto>();
+                string loadQuery = @"SELECT load_id, description, volume, weight FROM `load` WHERE job = @jobDbId";
+                
+                using (var loadCmd = new MySqlCommand(loadQuery, conn))
+                {
+                    loadCmd.Parameters.AddWithValue("@jobDbId", job.Id);
+                    using var loadReader = loadCmd.ExecuteReader();
+                    while (loadReader.Read())
+                    {
+                        var load = new LoadDto
+                        {
+                            LoadId = loadReader.GetString("load_id"),
+                            Description = loadReader.GetString("description"),
+                            Volume = loadReader.GetDouble("volume"),
+                            Weight = loadReader.GetDouble("weight")
+                        };
+                        loads.Add(load);
+                    }
+                }
+
+                return new JobWithLoadsDto
+                {
+                    JobId = job.JobId,
+                    Customer = customerCusId,
+                    PickupLocation = job.PickupLocation,
+                    DeliveryLocation = job.DeliveryLocation,
+                    ScheduledDate = job.ScheduledDate,
+                    EstimatedCost = job.EstimatedCost,
+                    ActualCost = job.ActualCost,
+                    Description = job.Description,
+                    Loads = loads
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetJobWithLoadsByJobId: {ex.Message}");
+                throw new Exception($"Failed to retrieve job with loads for JobId: {jobId}", ex);
             }
         }
     }

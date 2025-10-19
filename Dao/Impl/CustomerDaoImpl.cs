@@ -204,5 +204,40 @@ namespace eshift.Dao.Impl
                 throw;
             }
         }
+
+        public CustomerModel? GetCustomerById(int id)
+        {
+            var conn = DatabaseConnection.Instance.Connection;
+            string query = @"SELECT id, cus_id, first_name, last_name, email, phone, address, city, zip_code, status, user_account FROM customer WHERE id = @id LIMIT 1";
+            try
+            {
+                using var cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    var status = new CustomerStatusModel(reader.GetInt32("status"), "");
+                    return new CustomerModel(
+                        reader.GetInt32("id"),
+                        reader.GetString("cus_id"),
+                        reader.GetString("first_name"),
+                        reader.GetString("last_name"),
+                        reader.GetString("email"),
+                        reader.GetString("phone"),
+                        reader.IsDBNull(reader.GetOrdinal("address")) ? "" : reader.GetString("address"),
+                        reader.IsDBNull(reader.GetOrdinal("city")) ? "" : reader.GetString("city"),
+                        reader.IsDBNull(reader.GetOrdinal("zip_code")) ? "" : reader.GetString("zip_code"),
+                        status,
+                        reader.IsDBNull(reader.GetOrdinal("user_account")) ? null : reader.GetInt32("user_account")
+                    );
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetCustomerById: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

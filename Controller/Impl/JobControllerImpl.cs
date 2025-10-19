@@ -1,8 +1,9 @@
 using eshift.Dto;
+using eshift.Enums;
 using eshift.Service;
 using eshift.Service.Impl;
-using eshift.Enums;
 using System.Collections.Generic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace eshift.Controller.Impl
 {
@@ -20,6 +21,18 @@ namespace eshift.Controller.Impl
         public List<JobGridDto>? GetAllJobsForGrid()
         {
             return jobService.GetAllJobsForGrid();
+        }
+
+        public List<JobGridDto> GetJobRequestByStatus(JobStatusEnum status)
+        {
+            try
+            {
+                return jobService.GetJobByStatus(status);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
         }
 
         public void DeleteJobByJobId(string jobId, JobStatusEnum status)
@@ -55,6 +68,53 @@ namespace eshift.Controller.Impl
         public void CreateJob(CreateJobFormDto dto)
         {
             jobService.CreateJob(dto);
+        }
+
+        public List<JobGridDto> FilterJobByJobId(string jobId)
+        {
+            try
+            {
+                return jobService.FilterJobByJobId(jobId);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public JobWithLoadsDto? GetJobWithLoadsByJobId(string jobId)
+        {
+            try
+            {
+                return jobService.GetJobWithLoadsByJobId(jobId);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+        public bool UpdateJobStatusByJobId(string jobId, JobStatusEnum status)
+        {
+            try
+            {
+                return jobService.UpdateJobStatusByJobId(jobId, status);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public bool AcceptJobRequest(JobDto job)
+        {
+            try
+            {
+                return jobService.AcceptJobRequest(job);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

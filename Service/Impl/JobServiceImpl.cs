@@ -35,6 +35,168 @@ namespace eshift.Service.Impl
             return gridDtos;
         }
 
+        public List<JobGridDto> GetJobByStatus(JobStatusEnum status)
+        {
+            try
+            {
+                // Get jobs by status
+                var jobs = jobDao.GetJobsByStatus(status.ToString());
+                var jobGridList = new List<JobGridDto>();
+
+                foreach (var job in jobs)
+                {
+                    // Get customer by ID
+                    var customer = customerDao.GetCustomerById(job.CustomerId);
+                    if (customer != null)
+                    {
+                        var jobGrid = new JobGridDto
+                        {
+                            JobID = job.JobId,
+                            Customer = customer.CusId,
+                            Pickup = job.PickupLocation,
+                            Delivery = job.DeliveryLocation,
+                            Description = job.Description,
+                            ScheduledDate = job.ScheduledDate,
+                            EstimatedCost = job.EstimatedCost,
+                            ActualCost = job.ActualCost,
+                            Status = status.ToString()
+                        };
+                        jobGridList.Add(jobGrid);
+                    }
+                }
+
+                return jobGridList;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetJobRequestByStatus: {ex.Message}");
+                throw new Exception("Failed to retrieve job requests.", ex);
+            }
+        }
+
+        public bool UpdateJobStatusByJobId(string jobId, JobStatusEnum status)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(jobId))
+                {
+                    throw new ArgumentException("Job ID cannot be empty.");
+                }
+
+                bool success = jobDao.UpdateJobStatusByJobId(jobId, (int)status);
+                if (!success)
+                {
+                    throw new Exception("Failed to update job status.");
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in UpdateJobStatusByJobId: {ex.Message}");
+                throw;
+            }
+        }
+
+        public List<JobGridDto> FilterJobByJobId(string jobId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(jobId))
+                {
+                    return new List<JobGridDto>();
+                }
+
+                // Get filtered jobs by job ID
+                var jobs = jobDao.FilterJobsByJobId(jobId);
+                var jobGridList = new List<JobGridDto>();
+
+                foreach (var job in jobs)
+                {
+                    // Get customer by ID
+                    var customer = customerDao.GetCustomerById(job.CustomerId);
+                    if (customer != null)
+                    {
+                        var jobGrid = new JobGridDto
+                        {
+                            JobID = job.JobId,
+                            Customer = customer.CusId,
+                            Pickup = job.PickupLocation,
+                            Delivery = job.DeliveryLocation,
+                            ScheduledDate = job.ScheduledDate,
+                            EstimatedCost = job.EstimatedCost,
+                            ActualCost = job.ActualCost,
+                            Status = ((JobStatusEnum)job.StatusId).ToString()
+                        };
+                        jobGridList.Add(jobGrid);
+                    }
+                }
+
+                return jobGridList;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in FilterJobByJobId: {ex.Message}");
+                throw new Exception("Failed to filter jobs by Job ID.", ex);
+            }
+        }
+
+        public JobWithLoadsDto? GetJobWithLoadsByJobId(string jobId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(jobId))
+                {
+                    throw new ArgumentException("Job ID cannot be empty.");
+                }
+
+                return jobDao.GetJobWithLoadsByJobId(jobId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetJobWithLoadsByJobId: {ex.Message}");
+                throw;
+            }
+        }
+
+        public bool AcceptJobRequest(JobDto jobDto)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(jobDto.JobId))
+                {
+                    throw new ArgumentException("Job ID cannot be empty.");
+                }
+
+                // Get existing job
+                var existingJobTuple = jobDao.GetJobWithCustomerAndStatusByJobId(jobDto.JobId);
+                if (existingJobTuple == null)
+                {
+                    throw new Exception($"Job with ID {jobDto.JobId} not found.");
+                }
+
+                var existingJob = existingJobTuple.Value.Item1;
+                
+                // Update estimated cost and status
+                existingJob.EstimatedCost = jobDto.EstimatedCost;
+                existingJob.StatusId = (int)JobStatusEnum.ACCEPTED;
+
+                // Update job in database
+                bool success = jobDao.UpdateJob(jobDto.JobId, existingJob);
+                if (!success)
+                {
+                    throw new Exception("Failed to accept job request.");
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in AcceptJobRequest: {ex.Message}");
+                throw;
+            }
+        }
+
         public void DeleteJobByJobId(string jobId, JobStatusEnum status)
         {
             if (string.IsNullOrWhiteSpace(jobId))

@@ -72,5 +72,17 @@ namespace eshift.Controller.Impl
                 throw;
             }
         }
+
+        public bool Login(LoginCredentialsDto loginCredentials)
+        {
+            try
+            {
+                return userService.Login(loginCredentials);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
