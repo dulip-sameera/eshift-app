@@ -1,0 +1,236 @@
+﻿using eshift.Controller;
+using eshift.Controller.Impl;
+using eshift.Dto;
+using eshift.Utils.Validation;
+using eshift.Enums;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace eshift.View.Job
+{
+    public partial class CreateJobForm : Form
+    {
+        private readonly IJobController jobController = new JobControllerImpl();
+        private CustomerDto? selectedCustomer = null;
+        private BindingList<LoadDto> loadList = new();
+        private BindingList<TransportUnitDto> transportUnitList = new();
+        private Dictionary<string, Label> errorLabels = new();
+
+        public CreateJobForm()
+        {
+            InitializeComponent();
+            dgLoads.DataSource = loadList;
+            dgTransportUnit.DataSource = transportUnitList;
+            errorLabels = new Dictionary<string, Label>
+            {
+                { "pickup", lblPickUpErrorMessage },
+                { "delivery", lblDeliveryErrorMessage },
+                { "scheduledDate", lblScheduleDateErrorMessage },
+                { "estimatedCost", lblEstimatedCostErrorMessage },
+                { "volume", lblLoadVoloumeErrorMessage },
+                { "weight", lblLoadWeightErrorMessage }
+            };
+            HideAllErrorLabels();
+        }
+
+        private void btnAddCustomer_Click(object sender, EventArgs e)
+        {
+            string customerId = txtCustomerId.Text.Trim();
+            var pattern = @"^CUS\d{4}\d{5}$";
+            if (string.IsNullOrWhiteSpace(customerId) || !System.Text.RegularExpressions.Regex.IsMatch(customerId, pattern))
+            {
+                MessageBox.Show("Customer ID must follow the pattern: CUSYYYYNNNNN", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                var customer = jobController.GetCustomerById(customerId);
+                if (customer == null)
+                {
+                    MessageBox.Show("Customer not found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                txtCustomerName.Text = customer.FirstName + " " + customer.LastName;
+                selectedCustomer = customer;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error retrieving customer: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAddLoad_Click(object sender, EventArgs e)
+        {
+            HideAllErrorLabels();
+            string description = txtLoadDescription.Text.Trim();
+            double volume = Convert.ToDouble(nmrcLoadVolume.Value);
+            double weight = Convert.ToDouble(nmrcLoadWeight.Value);
+            var errors = LoadValidator.Validate(volume, weight);
+            if (errors.Count > 0)
+            {
+                if (errors.ContainsKey("volume"))
+                    lblLoadVoloumeErrorMessage.Text = errors["volume"];
+                if (errors.ContainsKey("weight"))
+                    lblLoadWeightErrorMessage.Text = errors["weight"];
+                return;
+            }
+            var loadDto = new LoadDto(null, null, description, volume, weight, 0); // JobId will be set later
+            loadList.Add(loadDto);
+            dgLoads.DataSource = null;
+            dgLoads.DataSource = loadList;
+        }
+
+        private void btnRemoveLoad_Click(object sender, EventArgs e)
+        {
+            if (dgLoads.SelectedRows.Count > 0)
+            {
+                var selectedLoad = dgLoads.SelectedRows[0].DataBoundItem as LoadDto;
+                if (selectedLoad != null)
+                    loadList.Remove(selectedLoad);
+            }
+        }
+
+        private void btnClearLoad_Click(object sender, EventArgs e)
+        {
+            loadList.Clear();
+        }
+
+        private void btnAddTransportUnit_Click(object sender, EventArgs e)
+        {
+            string tuId = txtTransportUnitId.Text.Trim();
+            var pattern = @"^TU\d{4}\d{5}$";
+            if (string.IsNullOrWhiteSpace(tuId) || !System.Text.RegularExpressions.Regex.IsMatch(tuId, pattern))
+            {
+                MessageBox.Show("Transport Unit ID must follow the pattern: TUYYYYNNNNN", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                var tu = jobController.GetTransportUnitById(tuId);
+                if (tu == null)
+                {
+                    MessageBox.Show("Transport unit not found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (tu.Available != TransportUnitAvailableEnum.YES)
+                {
+                    MessageBox.Show("Transport unit is not available.", "Not Available", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                transportUnitList.Add(tu);
+                dgTransportUnit.DataSource = null;
+                dgTransportUnit.DataSource = transportUnitList;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error retrieving transport unit: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnRemoveTransportUnit_Click(object sender, EventArgs e)
+        {
+            if (dgTransportUnit.SelectedRows.Count > 0)
+            {
+                var selectedTU = dgTransportUnit.SelectedRows[0].DataBoundItem as TransportUnitDto;
+                if (selectedTU != null)
+                    transportUnitList.Remove(selectedTU);
+            }
+        }
+
+        private void btnClearTransportUnit_Click(object sender, EventArgs e)
+        {
+            transportUnitList.Clear();
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            HideAllErrorLabels();
+            if (selectedCustomer == null)
+            {
+                MessageBox.Show("Please add a valid customer.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            string pickup = rchTxtPickup.Text.Trim();
+            string delivery = rchTxtDelivery.Text.Trim();
+            DateTime scheduledDate = dtTmPckrScheduledDate.Value;
+            string estimatedCostStr = txtEstimatedCost.Text.Trim();
+            string description = rchTxtDescription.Text.Trim();
+            var errors = JobFormValidator.Validate(pickup, delivery, scheduledDate, estimatedCostStr);
+            if (errors.Count > 0)
+            {
+                if (errors.ContainsKey("pickup"))
+                    lblPickUpErrorMessage.Text = errors["pickup"];
+                if (errors.ContainsKey("delivery"))
+                    lblDeliveryErrorMessage.Text = errors["delivery"];
+                if (errors.ContainsKey("scheduledDate"))
+                    lblScheduleDateErrorMessage.Text = errors["scheduledDate"];
+                if (errors.ContainsKey("estimatedCost"))
+                    lblEstimatedCostErrorMessage.Text = errors["estimatedCost"];
+                return;
+            }
+            double estimatedCost = double.Parse(estimatedCostStr);
+            // Check transport unit volume/weight vs load volume/weight
+            if (transportUnitList.Count > 0)
+            {
+                double tuTotalVolume = 0, tuTotalWeight = 0;
+                foreach (var tu in transportUnitList)
+                {
+                    var vehicle = jobController.GetVehicleById(tu.VehicleId);
+                    tuTotalVolume += vehicle.ContainerVolume;
+                    tuTotalWeight += vehicle.MaxWeight;
+                }
+                double loadTotalVolume = 0, loadTotalWeight = 0;
+                foreach (var load in loadList)
+                {
+                    loadTotalVolume += load.Volume;
+                    loadTotalWeight += load.Weight;
+                }
+                if (tuTotalVolume < loadTotalVolume || tuTotalWeight < loadTotalWeight)
+                {
+                    MessageBox.Show("Transport units do not have enough capacity for the loads. Add more transport units or reduce loads.", "Capacity Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            var dto = new CreateJobFormDto(
+                selectedCustomer.Id ?? 0,
+                pickup,
+                delivery,
+                string.IsNullOrWhiteSpace(description) ? null : description,
+                scheduledDate,
+                estimatedCost,
+                new List<LoadDto>(loadList),
+                new List<TransportUnitDto>(transportUnitList)
+            );
+            try
+            {
+                jobController.CreateJob(dto);
+                MessageBox.Show("Job created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                windowClose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error creating job: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void HideAllErrorLabels()
+        {
+            foreach (var label in errorLabels.Values)
+            {
+                label.Text = "";
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            windowClose();
+        }
+
+        private void windowClose()
+        {
+            this.Close();
+        }
+    }
+}

@@ -1,0 +1,106 @@
+﻿using eshift.Database;
+using eshift.Model;
+using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+
+namespace eshift.Dao.Impl
+{
+    internal class JobDaoImpl : IJobDao
+    {
+        public List<(JobModel, string, string, string)> GetAllJobsWithCustomerAndStatus()
+        {
+            var list = new List<(JobModel, string, string, string)>();
+            var conn = DatabaseConnection.Instance.Connection;
+            string query = @"SELECT j.id, j.job_id, j.pickup_location, j.delivery_location, j.scheduled_date, j.estimated_cost, j.actual_cost, j.status, j.customer, j.description,
+                                    c.cus_id, c.first_name, s.name as status_name
+                             FROM job j
+                             JOIN customer c ON j.customer = c.id
+                             JOIN job_status s ON j.status = s.id";
+            using var cmd = new MySqlCommand(query, conn);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var jobModel = new JobModel(
+                    reader.GetInt32("id"),
+                    reader.GetString("job_id"),
+                    reader.GetString("pickup_location"),
+                    reader.GetString("delivery_location"),
+                    reader.GetDateTime("scheduled_date"),
+                    reader.IsDBNull(reader.GetOrdinal("estimated_cost")) ? null : reader.GetDouble("estimated_cost"),
+                    reader.IsDBNull(reader.GetOrdinal("actual_cost")) ? null : reader.GetDouble("actual_cost"),
+                    reader.GetInt32("status"),
+                    reader.GetInt32("customer"),
+                    reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString("description")
+                );
+                string cusId = reader.GetString("cus_id");
+                string firstName = reader.GetString("first_name");
+                string statusName = reader.GetString("status_name");
+                list.Add((jobModel, cusId, firstName, statusName));
+            }
+            return list;
+        }
+
+        public (JobModel, string, string, string)? GetJobWithCustomerAndStatusByJobId(string jobId)
+        {
+            var conn = DatabaseConnection.Instance.Connection;
+            string query = @"SELECT j.id, j.job_id, j.pickup_location, j.delivery_location, j.scheduled_date, j.estimated_cost, j.actual_cost, j.status, j.customer, j.description,
+                                    c.cus_id, c.first_name, s.name as status_name
+                             FROM job j
+                             JOIN customer c ON j.customer = c.id
+                             JOIN job_status s ON j.status = s.id
+                             WHERE j.job_id = @jobId LIMIT 1";
+            using var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@jobId", jobId);
+            using var reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                var jobModel = new JobModel(
+                    reader.GetInt32("id"),
+                    reader.GetString("job_id"),
+                    reader.GetString("pickup_location"),
+                    reader.GetString("delivery_location"),
+                    reader.GetDateTime("scheduled_date"),
+                    reader.IsDBNull(reader.GetOrdinal("estimated_cost")) ? null : reader.GetDouble("estimated_cost"),
+                    reader.IsDBNull(reader.GetOrdinal("actual_cost")) ? null : reader.GetDouble("actual_cost"),
+                    reader.GetInt32("status"),
+                    reader.GetInt32("customer"),
+                    reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString("description")
+                );
+                string cusId = reader.GetString("cus_id");
+                string firstName = reader.GetString("first_name");
+                string statusName = reader.GetString("status_name");
+                return (jobModel, cusId, firstName, statusName);
+            }
+            return null;
+        }
+
+        public bool UpdateJobStatusByJobId(string jobId, int statusId)
+        {
+            var conn = DatabaseConnection.Instance.Connection;
+            string query = "UPDATE job SET status = @statusId WHERE job_id = @jobId";
+            using var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@statusId", statusId);
+            cmd.Parameters.AddWithValue("@jobId", jobId);
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
+        public bool UpdateJob(string jobId, JobModel model)
+        {
+            var conn = DatabaseConnection.Instance.Connection;
+            string query = @"UPDATE job SET pickup_location = @pickup, delivery_location = @delivery, scheduled_date = @scheduledDate,
+                             estimated_cost = @estimatedCost, actual_cost = @actualCost, status = @status, customer = @customer, description = @description
+                             WHERE job_id = @jobId";
+            using var cmd = new MySqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@pickup", model.PickupLocation);
+            cmd.Parameters.AddWithValue("@delivery", model.DeliveryLocation);
+            cmd.Parameters.AddWithValue("@scheduledDate", model.ScheduledDate);
+            cmd.Parameters.AddWithValue("@estimatedCost", model.EstimatedCost);
+            cmd.Parameters.AddWithValue("@actualCost", model.ActualCost);
+            cmd.Parameters.AddWithValue("@status", model.StatusId);
+            cmd.Parameters.AddWithValue("@customer", model.CustomerId);
+            cmd.Parameters.AddWithValue("@description", model.Description);
+            cmd.Parameters.AddWithValue("@jobId", jobId);
+            return cmd.ExecuteNonQuery() > 0;
+        }
+    }
+}

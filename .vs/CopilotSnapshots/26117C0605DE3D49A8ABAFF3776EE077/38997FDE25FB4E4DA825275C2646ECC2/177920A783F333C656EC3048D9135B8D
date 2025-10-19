@@ -1,0 +1,38 @@
+﻿using eshift.Dto;
+using eshift.Service;
+using eshift.Service.Impl;
+using eshift.Enums;
+using System.Collections.Generic;
+
+namespace eshift.Controller.Impl
+{
+    internal class JobControllerImpl : IJobController
+    {
+        private readonly IJobService jobService;
+
+        public JobControllerImpl()
+        {
+            jobService = new JobServiceImpl();
+        }
+
+        public List<JobGridDto>? GetAllJobsForGrid()
+        {
+            return jobService.GetAllJobsForGrid();
+        }
+
+        public void DeleteJobByJobId(string jobId, JobStatusEnum status)
+        {
+            jobService.DeleteJobByJobId(jobId, status);
+        }
+
+        public void UpdateJob(string jobId, JobDto job)
+        {
+            jobService.UpdateJob(jobId, job);
+        }
+
+        public JobGridDto? GetJobForGridByJobId(string jobId)
+        {
+            return jobService.GetJobForGridByJobId(jobId);
+        }
+    }
+}

@@ -1,0 +1,60 @@
+using eshift.Dto;
+using eshift.Service;
+using eshift.Service.Impl;
+using eshift.Enums;
+using System.Collections.Generic;
+
+namespace eshift.Controller.Impl
+{
+    internal class JobControllerImpl : IJobController
+    {
+        private readonly IJobService jobService;
+        private readonly IVehicleController vehicleController;
+
+        public JobControllerImpl()
+        {
+            jobService = new JobServiceImpl();
+            vehicleController = new VehilceConrollerImpl();
+        }
+
+        public List<JobGridDto>? GetAllJobsForGrid()
+        {
+            return jobService.GetAllJobsForGrid();
+        }
+
+        public void DeleteJobByJobId(string jobId, JobStatusEnum status)
+        {
+            jobService.DeleteJobByJobId(jobId, status);
+        }
+
+        public void UpdateJob(string jobId, JobDto job)
+        {
+            jobService.UpdateJob(jobId, job);
+        }
+
+        public JobGridDto? GetJobForGridByJobId(string jobId)
+        {
+            return jobService.GetJobForGridByJobId(jobId);
+        }
+
+        public CustomerDto? GetCustomerById(string customerId)
+        {
+            return jobService.GetCustomerById(customerId);
+        }
+
+        public TransportUnitDto? GetTransportUnitById(string tuId)
+        {
+            return jobService.GetTransportUnitById(tuId);
+        }
+
+        public VehicleDto? GetVehicleById(int vehicleId)
+        {
+            return vehicleController.GetVehicleById(vehicleId);
+        }
+
+        public void CreateJob(CreateJobFormDto dto)
+        {
+            jobService.CreateJob(dto);
+        }
+    }
+}

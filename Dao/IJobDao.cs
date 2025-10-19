@@ -1,0 +1,15 @@
+using eshift.Model;
+using System.Collections.Generic;
+using eshift.Dto;
+
+namespace eshift.Dao
+{
+    internal interface IJobDao
+    {
+        List<(JobModel, string, string, string)> GetAllJobsWithCustomerAndStatus();
+        (JobModel, string, string, string)? GetJobWithCustomerAndStatusByJobId(string jobId);
+        bool UpdateJobStatusByJobId(string jobId, int statusId);
+        bool UpdateJob(string jobId, JobModel model);
+        void CreateJob(string jobId, CreateJobFormDto dto, int statusId);
+    }
+}

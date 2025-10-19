@@ -1,0 +1,26 @@
+﻿using eshift.Enums;
+
+namespace eshift.Dto
+{
+    internal class TransportUnitDto
+    {
+        public int? Id { get; set; } // Database ID
+        public string TuId { get; set; } = string.Empty;
+        public int VehicleId { get; set; }
+        public int DriverId { get; set; }
+        public int AssistantId { get; set; }
+        public TransportUnitAvailableEnum Available { get; set; }
+
+        public TransportUnitDto() { }
+
+        public TransportUnitDto(int? id, string tuId, int vehicleId, int driverId, int assistantId, TransportUnitAvailableEnum available)
+        {
+            Id = id;
+            TuId = tuId;
+            VehicleId = vehicleId;
+            DriverId = driverId;
+            AssistantId = assistantId;
+            Available = available;
+        }
+    }
+}

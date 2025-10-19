@@ -1,0 +1,110 @@
+﻿using eshift.Controller;
+using eshift.Controller.Impl;
+
+
+namespace eshift.View
+{
+    public partial class UserAccountForm : Form
+    {
+
+        private readonly IUserAccountController userAccountController;
+        private readonly eshift.Dao.ICustomerDao customerDao = new eshift.Dao.Impl.CustomerDaoImpl();
+        private readonly eshift.Dao.IStaffDao staffDao = new eshift.Dao.Impl.StaffDaoImpl();
+        public UserAccountForm()
+        {
+            InitializeComponent();
+            userAccountController = new UserAccountControllerImpl();
+        }
+
+        private async void UserAccountForm_Load(object sender, EventArgs e)
+        {
+            await LoadUserAccountsAsync();
+        }
+
+        private async Task LoadUserAccountsAsync()
+        {
+            try
+            {
+                // Get all users for grid
+                var users = await Task.Run(() => userAccountController.GetAllUsersForGrid());
+                var userGridList = new List<eshift.Dto.UserGridDto>();
+
+                foreach (var user in users)
+                {
+                    var userGrid = new eshift.Dto.UserGridDto(user.Id, user.Name, user.Username, user.Role);
+                    try
+                    {
+                        if (user.Role != null && user.Role.Trim().ToUpper() == "CUSTOMER")
+                        {
+                            var customer = await Task.Run(() => customerDao.GetCustomerByUseraccount(user.Id));
+                            if (customer != null)
+                            {
+                                userGrid.Id = customer.CusId != null ? customer.CusId.GetHashCode() : user.Id;
+                                userGrid.Name = $"{customer.FirstName} {customer.LastName}";
+                            }
+                        }
+                        else if (user.Role != null && user.Role.Trim().ToUpper() == "ADMIN")
+                        {
+                            var staff = await Task.Run(() => staffDao.GetStaffByUseraccount(user.Id));
+                            if (staff != null)
+                            {
+                                userGrid.Id = staff.StaffId != null ? staff.StaffId.GetHashCode() : user.Id;
+                                userGrid.Name = $"{staff.FirstName} {staff.LastName}";
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error loading user details for userId {user.Id}: {ex.Message}");
+                    }
+                    userGridList.Add(userGrid);
+                }
+                dgUserAccount.DataSource = userGridList;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading user accounts: {ex.Message}");
+                MessageBox.Show($"Failed to load user accounts. Please try again.\nError: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AdminDashboardForm adminDashboardForm = new AdminDashboardForm();
+            adminDashboardForm.FormClosed += (s, args) =>
+            {
+                this.Close();
+                Application.Exit();
+            };
+            adminDashboardForm.Show();
+        }
+
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnUpdateAccount_Click(object sender, EventArgs e)
+        {
+            UpdateUserAccountForm updateUserAccountForm = new UpdateUserAccountForm();
+            updateUserAccountForm.Show();
+        }
+
+        private void btnUsernameSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCreateAccount_Click(object sender, EventArgs e)
+        {
+            CreateUserAccountForm createUserAccountForm = new CreateUserAccountForm();
+            createUserAccountForm.Show();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

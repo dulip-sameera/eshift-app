@@ -1,0 +1,17 @@
+﻿using eshift.Dto;
+
+namespace eshift.Service
+{
+    internal interface IVehicleService
+    {
+        List<VehicleDto> GetVehicles();
+        VehicleDto? GetVehicleByRegNo(string regNo);
+        VehicleDto? GetVehicleById(int id);
+
+        void DeleteVehicleByRegNo(string regNo);
+
+        void UpdateVehicle(string prevRegNo, VehicleDto vehicle);
+
+        void CreateVehicle(VehicleDto vehicle);
+    }
+}

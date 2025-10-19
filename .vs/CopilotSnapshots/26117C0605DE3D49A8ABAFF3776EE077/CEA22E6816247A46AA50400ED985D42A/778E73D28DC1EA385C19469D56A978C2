@@ -1,0 +1,73 @@
+﻿using eshift.Dto;
+using eshift.Model;
+using eshift.Dao;
+using eshift.Dao.Impl;
+using eshift.Utils.Mapper;
+using eshift.Enums;
+using System.Collections.Generic;
+
+namespace eshift.Service.Impl
+{
+    internal class JobServiceImpl : IJobService
+    {
+        private readonly IJobDao jobDao = new JobDaoImpl();
+
+        public List<JobGridDto>? GetAllJobsForGrid()
+        {
+            var jobTuples = jobDao.GetAllJobsWithCustomerAndStatus();
+            if (jobTuples == null || jobTuples.Count == 0)
+                throw new KeyNotFoundException("No jobs found.");
+
+            var gridDtos = new List<JobGridDto>();
+            foreach (var tuple in jobTuples)
+            {
+                var jobModel = tuple.Item1;
+                var customerCusId = tuple.Item2;
+                var customerFirstName = tuple.Item3;
+                var statusName = tuple.Item4;
+                gridDtos.Add(JobMapper.ToGridDto(jobModel, customerCusId, customerFirstName, statusName));
+            }
+            return gridDtos;
+        }
+
+        public void DeleteJobByJobId(string jobId, JobStatusEnum status)
+        {
+            if (string.IsNullOrWhiteSpace(jobId))
+                throw new ArgumentException("Job ID cannot be empty.");
+
+            var tuple = jobDao.GetJobWithCustomerAndStatusByJobId(jobId);
+            if (tuple == null)
+                throw new KeyNotFoundException("Job not found for deletion.");
+
+            bool updated = jobDao.UpdateJobStatusByJobId(jobId, (int)status);
+            if (!updated)
+                throw new Exception("Failed to delete (soft delete) job.");
+        }
+
+        public void UpdateJob(string jobId, JobDto job)
+        {
+            if (string.IsNullOrWhiteSpace(jobId))
+                throw new ArgumentException("Job ID cannot be empty.");
+
+            var tuple = jobDao.GetJobWithCustomerAndStatusByJobId(jobId);
+            if (tuple == null)
+                throw new KeyNotFoundException("Job not found for update.");
+
+            var model = JobMapper.ToModel(job);
+            bool updated = jobDao.UpdateJob(jobId, model);
+            if (!updated)
+                throw new Exception("Failed to update job.");
+        }
+
+        public JobGridDto? GetJobForGridByJobId(string jobId)
+        {
+            var tuple = jobDao.GetJobWithCustomerAndStatusByJobId(jobId);
+            if (tuple == null) return null;
+            var jobModel = tuple.Value.Item1;
+            var customerCusId = tuple.Value.Item2;
+            var customerFirstName = tuple.Value.Item3;
+            var statusName = tuple.Value.Item4;
+            return JobMapper.ToGridDto(jobModel, customerCusId, customerFirstName, statusName);
+        }
+    }
+}

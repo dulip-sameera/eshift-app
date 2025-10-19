@@ -1,0 +1,102 @@
+using eshift.Dto;
+using eshift.Model;
+using eshift.Dao;
+using eshift.Dao.Impl;
+using eshift.Utils.Mapper;
+using eshift.Utils.Generator;
+using eshift.Enums;
+using System.Collections.Generic;
+
+namespace eshift.Service.Impl
+{
+    internal class StaffServiceImpl : IStaffService
+    {
+        private readonly IStaffDao staffDao = new StaffDaoImpl();
+
+        public List<StaffGridDto> GetAllStaffForGrid()
+        {
+            var staffTuples = staffDao.GetAllStaffWithUsernames();
+            if (staffTuples == null || staffTuples.Count == 0)
+                throw new KeyNotFoundException("No staff found.");
+
+            return StaffMapper.ToGridDtoList(staffTuples);
+        }
+
+        public StaffGridDto? GetStaffForGridByStaffId(string staffId)
+        {
+            var tuple = staffDao.GetStaffWithUsernameByStaffId(staffId);
+            return tuple != null ? StaffMapper.ToGridDto(tuple.Value.Item1, tuple.Value.Item2) : null;
+        }
+
+        public StaffDto? GetStaffByStaffId(string staffId) // Added
+        {
+            var tuple = staffDao.GetStaffWithUsernameByStaffId(staffId);
+            return tuple != null ? StaffMapper.ToDto(tuple.Value.Item1) : null;
+        }
+
+        public void DeleteStaffByStaffId(string staffId, StaffStatusEnum status)
+        {
+            if (string.IsNullOrWhiteSpace(staffId))
+                throw new ArgumentException("Staff ID cannot be empty.");
+
+            var tuple = staffDao.GetStaffWithUsernameByStaffId(staffId);
+            if (tuple == null)
+                throw new KeyNotFoundException("Staff not found for deletion.");
+
+            bool updated = staffDao.UpdateStaffStatusByStaffId(staffId, status);
+            if (!updated)
+                throw new Exception("Failed to delete (soft delete) staff member.");
+        }
+
+        public string CreateStaff(StaffDto staff)
+        {
+            string staffId = StaffIdGenerator.GenerateNextStaffId();
+            var tuple = staffDao.GetStaffWithUsernameByStaffId(staffId);
+            if (tuple != null)
+                throw new ArgumentException("Staff with this ID already exists.");
+
+            var model = new StaffModel(
+                id: 0,
+                staffId: staffId,
+                firstName: staff.FirstName,
+                lastName: staff.LastName,
+                phone: staff.Phone,
+                email: staff.Email,
+                licenseNumber: staff.LicenseNumber,
+                type: new StaffTypeModel(staff.Type.Id, staff.Type.Name),
+                userAccount: null,
+                status: StaffStatusEnum.ACTIVE
+            );
+            bool created = staffDao.CreateStaff(model);
+            if (!created)
+                throw new Exception("Failed to create staff member.");
+            return staffId;
+        }
+
+        public void UpdateStaff(string staffId, StaffDto staff)
+        {
+            if (string.IsNullOrWhiteSpace(staffId))
+                throw new ArgumentException("Staff ID cannot be empty.");
+
+            var tuple = staffDao.GetStaffWithUsernameByStaffId(staffId);
+            if (tuple == null)
+                throw new KeyNotFoundException("Staff not found for update.");
+
+            var model = new StaffModel(
+                id: tuple.Value.Item1.Id,
+                staffId: staffId,
+                firstName: staff.FirstName,
+                lastName: staff.LastName,
+                phone: staff.Phone,
+                email: staff.Email,
+                licenseNumber: staff.LicenseNumber,
+                type: new StaffTypeModel(staff.Type.Id, staff.Type.Name),
+                userAccount: tuple.Value.Item1.UserAccount,
+                status: staff.Status
+            );
+            bool updated = staffDao.UpdateStaff(staffId, model);
+            if (!updated)
+                throw new Exception("Failed to update staff member.");
+        }
+    }
+}

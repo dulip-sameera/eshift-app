@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace eshift.Dto
+{
+    internal class UserGridDto
+    {
+        public int Id { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
+
+        public UserGridDto() { }
+
+        public UserGridDto(int id): this(id, string.Empty, string.Empty)
+        {
+        }
+
+        public UserGridDto(string username): this(0, username, string.Empty)
+        { 
+        }
+
+        public UserGridDto(int id, string username, string role)
+        {
+            Id = id;
+            Username = username;
+            Role = role;
+        }
+
+    }
+}

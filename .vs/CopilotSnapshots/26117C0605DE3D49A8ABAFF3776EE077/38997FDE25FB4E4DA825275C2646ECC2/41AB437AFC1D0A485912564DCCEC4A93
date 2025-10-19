@@ -1,0 +1,15 @@
+﻿using eshift.Model;
+using System.Collections.Generic;
+
+namespace eshift.Dao
+{
+    internal interface ICustomerDao
+    {
+        List<(CustomerModel, string)> GetAllCustomersWithUsernames();
+        (CustomerModel, string)? GetCustomerWithUsernameByCusId(string cusId);
+        bool UpdateCustomerStatusByCusId(string cusId, int statusId);
+        bool CreateCustomer(CustomerModel customer);
+        bool UpdateCustomer(string cusId, CustomerModel customer); // Add update method
+        string? GetLastCustomerId();
+    }
+}

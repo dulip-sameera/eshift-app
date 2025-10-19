@@ -1,0 +1,30 @@
+﻿using eshift.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace eshift.Controller.Impl
+{
+    internal class UserAccountControllerImpl : IUserAccountController
+    {
+
+        public UserAccountControllerImpl() { }
+
+        public void DeleteUserAccount(UserGridDto userGridDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UserGridDto> GetAllUsersForGrid()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UserGridDto> GetUsersForGridByUsername(string username)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

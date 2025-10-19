@@ -1,0 +1,16 @@
+﻿using eshift.Dto;
+using eshift.Model;
+using System.Collections.Generic;
+
+namespace eshift.Dao
+{
+    internal interface IVehicleDao
+    {
+        List<VehicleModel> GetVehicles();
+        VehicleModel? GetVehicleByRegNo(string regNo);
+        VehicleModel? GetVehicleById(int id);
+        bool DeleteVehicleByRegNo(string regNo);
+        bool UpdateVehicle(string prevRegNo ,VehicleModel vehicle);
+        bool CreateVehicle(VehicleModel vehicle);
+    }
+}

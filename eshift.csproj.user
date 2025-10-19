@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="View\Customer\CreateCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Customer\CustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Customer\UpdateCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Job\CreateJobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Job\CustomerCreateJobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Job\CustomerJobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Job\CustomerJobUpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Job\JobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Job\JobRequestAcceptForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Job\JobRequestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Job\UpdateJobForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Report\ReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Staff\CreateStaffForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Staff\StaffForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Staff\UpdateStaffForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\TransportUnit\CreateTransportUnitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\TransportUnit\TransportUnitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\TransportUnit\UpdateTransportUnitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\UserAccount\CreateUserAccountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\CustomerDashboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\UserAccount\CustomerAccountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\UserAccount\UpdateUserAccountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\UserAccount\UserAccountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Vehicle\CreateVehicleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Vehicle\UpdateVehicleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="View\Vehicle\VehicleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

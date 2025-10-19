@@ -1,0 +1,142 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\lmu\\ad\\cw-1\\work\\eshift\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|d:\\lmu\\ad\\cw-1\\work\\eshift\\view\\useraccount\\updateuseraccountform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|solutionrelative:view\\useraccount\\updateuseraccountform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|d:\\lmu\\ad\\cw-1\\work\\eshift\\service\\impl\\userserviceimpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|solutionrelative:service\\impl\\userserviceimpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|d:\\lmu\\ad\\cw-1\\work\\eshift\\dao\\iuserdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|solutionrelative:dao\\iuserdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|d:\\lmu\\ad\\cw-1\\work\\eshift\\view\\useraccount\\updateuseraccountform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|solutionrelative:view\\useraccount\\updateuseraccountform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|d:\\lmu\\ad\\cw-1\\work\\eshift\\utils\\validation\\uservalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|solutionrelative:utils\\validation\\uservalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|d:\\lmu\\ad\\cw-1\\work\\eshift\\dto\\userupdateformdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|solutionrelative:dto\\userupdateformdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|d:\\lmu\\ad\\cw-1\\work\\eshift\\controller\\iusercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1803C2A1-6C0E-434B-916C-0CCE3355D0AF}|eshift.csproj|solutionrelative:controller\\iusercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IUserDao.cs",
+              "DocumentMoniker": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Dao\\IUserDao.cs",
+              "RelativeDocumentMoniker": "Dao\\IUserDao.cs",
+              "ToolTip": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Dao\\IUserDao.cs",
+              "RelativeToolTip": "Dao\\IUserDao.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T00:03:55.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserServiceImpl.cs",
+              "DocumentMoniker": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Service\\Impl\\UserServiceImpl.cs",
+              "RelativeDocumentMoniker": "Service\\Impl\\UserServiceImpl.cs",
+              "ToolTip": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Service\\Impl\\UserServiceImpl.cs",
+              "RelativeToolTip": "Service\\Impl\\UserServiceImpl.cs",
+              "ViewState": "AgIAANAAAAAAAAAAAAAAANEAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-19T00:03:29.388Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IUserController.cs",
+              "DocumentMoniker": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Controller\\IUserController.cs",
+              "RelativeDocumentMoniker": "Controller\\IUserController.cs",
+              "ToolTip": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Controller\\IUserController.cs",
+              "RelativeToolTip": "Controller\\IUserController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T23:56:34.123Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserUpdateFormDto.cs",
+              "DocumentMoniker": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Dto\\UserUpdateFormDto.cs",
+              "RelativeDocumentMoniker": "Dto\\UserUpdateFormDto.cs",
+              "ToolTip": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Dto\\UserUpdateFormDto.cs",
+              "RelativeToolTip": "Dto\\UserUpdateFormDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T23:54:02.633Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserValidator.cs",
+              "DocumentMoniker": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Utils\\Validation\\UserValidator.cs",
+              "RelativeDocumentMoniker": "Utils\\Validation\\UserValidator.cs",
+              "ToolTip": "D:\\lmu\\ad\\cw-1\\work\\eshift\\Utils\\Validation\\UserValidator.cs",
+              "RelativeToolTip": "Utils\\Validation\\UserValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T23:53:09.859Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UpdateUserAccountForm.cs",
+              "DocumentMoniker": "D:\\lmu\\ad\\cw-1\\work\\eshift\\View\\UserAccount\\UpdateUserAccountForm.cs",
+              "RelativeDocumentMoniker": "View\\UserAccount\\UpdateUserAccountForm.cs",
+              "ToolTip": "D:\\lmu\\ad\\cw-1\\work\\eshift\\View\\UserAccount\\UpdateUserAccountForm.cs",
+              "RelativeToolTip": "View\\UserAccount\\UpdateUserAccountForm.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAgwCUAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T23:40:07.169Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UpdateUserAccountForm.cs [Design]",
+              "DocumentMoniker": "D:\\lmu\\ad\\cw-1\\work\\eshift\\View\\UserAccount\\UpdateUserAccountForm.cs",
+              "RelativeDocumentMoniker": "View\\UserAccount\\UpdateUserAccountForm.cs",
+              "ToolTip": "D:\\lmu\\ad\\cw-1\\work\\eshift\\View\\UserAccount\\UpdateUserAccountForm.cs [Design]",
+              "RelativeToolTip": "View\\UserAccount\\UpdateUserAccountForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-18T23:40:05.061Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

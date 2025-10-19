@@ -1,0 +1,8 @@
+﻿namespace eshift.Enums
+{
+    internal enum TransportUnitAvailableEnum
+    {
+        YES,
+        NO
+    }
+}

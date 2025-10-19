@@ -1,0 +1,61 @@
+﻿using eshift.Controller;
+using eshift.Controller.Impl;
+
+
+namespace eshift.View
+{
+    public partial class UserAccountForm : Form
+    {
+
+        private readonly IUserAccountController userAccountController;
+        public UserAccountForm()
+        {
+            InitializeComponent();
+            userAccountController = new UserAccountControllerImpl();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AdminDashboardForm adminDashboardForm = new AdminDashboardForm();
+            adminDashboardForm.FormClosed += (s, args) =>
+            {
+                this.Close();
+                Application.Exit();
+            };
+            adminDashboardForm.Show();
+        }
+
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnUpdateAccount_Click(object sender, EventArgs e)
+        {
+            UpdateUserAccountForm updateUserAccountForm = new UpdateUserAccountForm();
+            updateUserAccountForm.Show();
+        }
+
+        private void btnUsernameSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCreateAccount_Click(object sender, EventArgs e)
+        {
+            CreateUserAccountForm createUserAccountForm = new CreateUserAccountForm();
+            createUserAccountForm.Show();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UserAccountForm_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using eshift.Dto;
+
+namespace eshift.Dto
+{
+    public class CreateJobFormDto
+    {
+        public int CustomerId { get; set; }
+        public string Pickup { get; set; }
+        public string Delivery { get; set; }
+        public string? Description { get; set; }
+        public DateTime ScheduledDate { get; set; }
+        public double EstimatedCost { get; set; }
+        public List<LoadDto> Loads { get; set; }
+        public List<TransportUnitDto> TransportUnits { get; set; }
+
+        public CreateJobFormDto(int customerId, string pickup, string delivery, string? description, DateTime scheduledDate, double estimatedCost, List<LoadDto> loads, List<TransportUnitDto> transportUnits)
+        {
+            CustomerId = customerId;
+            Pickup = pickup;
+            Delivery = delivery;
+            Description = description;
+            ScheduledDate = scheduledDate;
+            EstimatedCost = estimatedCost;
+            Loads = loads;
+            TransportUnits = transportUnits;
+        }
+    }
+}
