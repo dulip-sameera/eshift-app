@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using eshift.Dto;
+using eshift.Enums;
 
 namespace eshift.Dto
 {
@@ -15,7 +16,9 @@ namespace eshift.Dto
         public List<LoadDto> Loads { get; set; }
         public List<TransportUnitDto> TransportUnits { get; set; }
 
-        public CreateJobFormDto(int customerId, string pickup, string delivery, string? description, DateTime scheduledDate, double estimatedCost, List<LoadDto> loads, List<TransportUnitDto> transportUnits)
+        public JobStatusEnum? Status { get; set; }
+
+        public CreateJobFormDto(int customerId, string pickup, string delivery, string? description, DateTime scheduledDate, double estimatedCost, List<LoadDto> loads, List<TransportUnitDto> transportUnits, JobStatusEnum? status)
         {
             CustomerId = customerId;
             Pickup = pickup;
@@ -25,6 +28,12 @@ namespace eshift.Dto
             EstimatedCost = estimatedCost;
             Loads = loads;
             TransportUnits = transportUnits;
+            Status = status;
+        }
+
+        public CreateJobFormDto(int customerId, string pickup, string delivery, string? description, DateTime scheduledDate, double estimatedCost, List<LoadDto> loads, List<TransportUnitDto> transportUnits): this(customerId, pickup, delivery, description, scheduledDate, estimatedCost, loads, transportUnits, null)
+        {
+           
         }
     }
 }

@@ -1,0 +1,20 @@
+Updated DAO files with using statements for proper connection disposal:
+
+✅ CustomerDaoImpl.cs - COMPLETED
+✅ JobDaoImpl.cs - COMPLETED  
+✅ LoadDao.cs - Already has using statement
+
+Remaining files to update:
+- TransportUnitDaoImpl.cs
+- UserDaoImpl.cs  
+- VehicleDaoImpl.cs
+- StaffDaoImpl.cs
+- RoleDaoImpl.cs
+
+All connection variables need to be changed from:
+var conn = DatabaseConnection.Instance.Connection;
+
+To:
+using var conn = DatabaseConnection.Instance.Connection;
+
+This ensures proper connection disposal and prevents memory leaks.

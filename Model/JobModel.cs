@@ -15,6 +15,8 @@ namespace eshift.Model
         public int CustomerId { get; set; }
         public string? Description { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+
         public JobModel() { }
 
         public JobModel(int? id, string jobId, string pickupLocation, string deliveryLocation, DateTime scheduledDate,
@@ -30,6 +32,23 @@ namespace eshift.Model
             StatusId = statusId;
             CustomerId = customerId;
             Description = description;
+            CreatedAt = DateTime.Now;
+        }
+
+        public JobModel(int? id, string jobId, string pickupLocation, string deliveryLocation, DateTime scheduledDate,
+            double? estimatedCost, double? actualCost, int statusId, int customerId, string? description, DateTime createdAt)
+        {
+            Id = id;
+            JobId = jobId;
+            PickupLocation = pickupLocation;
+            DeliveryLocation = deliveryLocation;
+            ScheduledDate = scheduledDate;
+            EstimatedCost = estimatedCost;
+            ActualCost = actualCost;
+            StatusId = statusId;
+            CustomerId = customerId;
+            Description = description;
+            CreatedAt = createdAt;
         }
     }
 }

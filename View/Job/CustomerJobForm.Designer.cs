@@ -36,7 +36,6 @@
             txtJobSearch = new TextBox();
             lblJobId = new Label();
             dgJob = new DataGridView();
-            lblFormTitle = new Label();
             JobID = new DataGridViewTextBoxColumn();
             Pickup = new DataGridViewTextBoxColumn();
             Delivery = new DataGridViewTextBoxColumn();
@@ -44,6 +43,8 @@
             EstimatedCost = new DataGridViewTextBoxColumn();
             ActualCost = new DataGridViewTextBoxColumn();
             Status = new DataGridViewTextBoxColumn();
+            lblFormTitle = new Label();
+            btnRefresh = new Button();
             ((System.ComponentModel.ISupportInitialize)dgJob).BeginInit();
             SuspendLayout();
             // 
@@ -113,7 +114,7 @@
             btnJobSearch.Cursor = Cursors.Hand;
             btnJobSearch.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnJobSearch.ForeColor = Color.White;
-            btnJobSearch.Location = new Point(484, 28);
+            btnJobSearch.Location = new Point(406, 28);
             btnJobSearch.Name = "btnJobSearch";
             btnJobSearch.Padding = new Padding(0, 5, 0, 5);
             btnJobSearch.Size = new Size(84, 37);
@@ -125,7 +126,7 @@
             // txtJobSearch
             // 
             txtJobSearch.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtJobSearch.Location = new Point(318, 32);
+            txtJobSearch.Location = new Point(240, 32);
             txtJobSearch.Name = "txtJobSearch";
             txtJobSearch.Size = new Size(160, 29);
             txtJobSearch.TabIndex = 39;
@@ -134,7 +135,7 @@
             // 
             lblJobId.AutoSize = true;
             lblJobId.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblJobId.Location = new Point(219, 35);
+            lblJobId.Location = new Point(141, 35);
             lblJobId.Name = "lblJobId";
             lblJobId.Size = new Size(52, 20);
             lblJobId.TabIndex = 38;
@@ -148,8 +149,51 @@
             dgJob.Columns.AddRange(new DataGridViewColumn[] { JobID, Pickup, Delivery, Description, EstimatedCost, ActualCost, Status });
             dgJob.Location = new Point(16, 85);
             dgJob.Name = "dgJob";
+            dgJob.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgJob.Size = new Size(1089, 445);
             dgJob.TabIndex = 37;
+            // 
+            // JobID
+            // 
+            JobID.DataPropertyName = "JobID";
+            JobID.HeaderText = "Job ID";
+            JobID.Name = "JobID";
+            // 
+            // Pickup
+            // 
+            Pickup.DataPropertyName = "Pickup";
+            Pickup.HeaderText = "Pickup";
+            Pickup.Name = "Pickup";
+            // 
+            // Delivery
+            // 
+            Delivery.DataPropertyName = "Delivery";
+            Delivery.HeaderText = "Delivery";
+            Delivery.Name = "Delivery";
+            // 
+            // Description
+            // 
+            Description.DataPropertyName = "Description";
+            Description.HeaderText = "Description";
+            Description.Name = "Description";
+            // 
+            // EstimatedCost
+            // 
+            EstimatedCost.DataPropertyName = "EstimatedCost";
+            EstimatedCost.HeaderText = "EstimatedCost";
+            EstimatedCost.Name = "EstimatedCost";
+            // 
+            // ActualCost
+            // 
+            ActualCost.DataPropertyName = "ActualCost";
+            ActualCost.HeaderText = "Actual Cost";
+            ActualCost.Name = "ActualCost";
+            // 
+            // Status
+            // 
+            Status.DataPropertyName = "Status";
+            Status.HeaderText = "Status";
+            Status.Name = "Status";
             // 
             // lblFormTitle
             // 
@@ -162,40 +206,20 @@
             lblFormTitle.TabIndex = 36;
             lblFormTitle.Text = "Job";
             // 
-            // JobID
+            // btnRefresh
             // 
-            JobID.HeaderText = "Job ID";
-            JobID.Name = "JobID";
-            // 
-            // Pickup
-            // 
-            Pickup.HeaderText = "Pickup";
-            Pickup.Name = "Pickup";
-            // 
-            // Delivery
-            // 
-            Delivery.HeaderText = "Delivery";
-            Delivery.Name = "Delivery";
-            // 
-            // Description
-            // 
-            Description.HeaderText = "Description";
-            Description.Name = "Description";
-            // 
-            // EstimatedCost
-            // 
-            EstimatedCost.HeaderText = "EstimatedCost";
-            EstimatedCost.Name = "EstimatedCost";
-            // 
-            // ActualCost
-            // 
-            ActualCost.HeaderText = "Actual Cost";
-            ActualCost.Name = "ActualCost";
-            // 
-            // Status
-            // 
-            Status.HeaderText = "Status";
-            Status.Name = "Status";
+            btnRefresh.BackColor = SystemColors.HotTrack;
+            btnRefresh.Cursor = Cursors.Hand;
+            btnRefresh.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRefresh.ForeColor = Color.White;
+            btnRefresh.Location = new Point(496, 28);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Padding = new Padding(0, 5, 0, 5);
+            btnRefresh.Size = new Size(84, 37);
+            btnRefresh.TabIndex = 45;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // CustomerJobForm
             // 
@@ -203,6 +227,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
             ClientSize = new Size(1125, 557);
+            Controls.Add(btnRefresh);
             Controls.Add(btnClose);
             Controls.Add(btnDeleteJob);
             Controls.Add(btnUpdateJob);
@@ -216,6 +241,7 @@
             Name = "CustomerJobForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "CustomerJobForm";
+            Load += CustomerJobForm_Load;
             ((System.ComponentModel.ISupportInitialize)dgJob).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -232,6 +258,7 @@
         private Label lblJobId;
         private DataGridView dgJob;
         private Label lblFormTitle;
+        private Button btnRefresh;
         private DataGridViewTextBoxColumn JobID;
         private DataGridViewTextBoxColumn Pickup;
         private DataGridViewTextBoxColumn Delivery;

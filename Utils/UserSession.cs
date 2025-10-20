@@ -9,14 +9,16 @@ namespace eshift.Utils
         public static string? Username { get; private set; }
         public static UserRoleEnum? Role { get; private set; }
         public static string? FullName { get; private set; }
+        public static int? DbId { get; set; }
 
-        public static void SetUserSession(int userId, string specialId, string username, UserRoleEnum role, string fullName)
+        public static void SetUserSession(int userId, string specialId, string username, UserRoleEnum role, string fullName, int? dbId)
         {
             UserId = userId;
             SpecialId = specialId;
             Username = username;
             Role = role;
             FullName = fullName;
+            DbId = dbId;
         }
 
         public static void Clear()
@@ -26,6 +28,7 @@ namespace eshift.Utils
             Username = null;
             Role = null;
             FullName = null;
+            DbId = 0;
         }
 
         public static bool IsLoggedIn()

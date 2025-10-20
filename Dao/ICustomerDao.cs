@@ -13,6 +13,8 @@ namespace eshift.Dao
         string? GetLastCustomerId();
         CustomerModel? GetCustomerByCusId(string cusId);
         CustomerModel? GetCustomerByUseraccount(int userAccount);
-        CustomerModel? GetCustomerById(int id); 
+        CustomerModel? GetCustomerById(int id);
+        int GetTotalCustomersCount();
+        int GetTotalCustomersCountByStatus(int statusId);
     }
 }

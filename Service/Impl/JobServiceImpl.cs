@@ -19,20 +19,28 @@ namespace eshift.Service.Impl
 
         public List<JobGridDto>? GetAllJobsForGrid()
         {
-            var jobTuples = jobDao.GetAllJobsWithCustomerAndStatus();
-            if (jobTuples == null || jobTuples.Count == 0)
-                throw new KeyNotFoundException("No jobs found.");
-
-            var gridDtos = new List<JobGridDto>();
-            foreach (var tuple in jobTuples)
+            try
             {
-                var jobModel = tuple.Item1;
-                var customerCusId = tuple.Item2;
-                var customerFirstName = tuple.Item3;
-                var statusName = tuple.Item4;
-                gridDtos.Add(JobMapper.ToGridDto(jobModel, customerCusId, customerFirstName, statusName));
+                var jobTuples = jobDao.GetAllJobsWithCustomerAndStatus();
+                if (jobTuples == null || jobTuples.Count == 0)
+                    throw new KeyNotFoundException("No jobs found.");
+
+                var gridDtos = new List<JobGridDto>();
+                foreach (var tuple in jobTuples)
+                {
+                    var jobModel = tuple.Item1;
+                    var customerCusId = tuple.Item2;
+                    var customerFirstName = tuple.Item3;
+                    var statusName = tuple.Item4;
+                    gridDtos.Add(JobMapper.ToGridDto(jobModel, customerCusId, customerFirstName, statusName));
+                }
+                return gridDtos;
             }
-            return gridDtos;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetAllJobsForGrid: {ex.Message}");
+                throw;
+            }
         }
 
         public List<JobGridDto> GetJobByStatus(JobStatusEnum status)
@@ -70,7 +78,7 @@ namespace eshift.Service.Impl
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetJobRequestByStatus: {ex.Message}");
-                throw new Exception("Failed to retrieve job requests.", ex);
+                throw;
             }
         }
 
@@ -137,7 +145,7 @@ namespace eshift.Service.Impl
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in FilterJobByJobId: {ex.Message}");
-                throw new Exception("Failed to filter jobs by Job ID.", ex);
+                throw;
             }
         }
 
@@ -155,6 +163,23 @@ namespace eshift.Service.Impl
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetJobWithLoadsByJobId: {ex.Message}");
+                throw;
+            }
+        }
+
+        public JobWithLoadsAndTransportUnitDto? GetJobWithLoadsAndTransportUnitsByJobId(string jobId)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(jobId))
+                {
+                    throw new ArgumentException("Job ID cannot be empty.");
+                }
+                return jobDao.GetJobWithLoadsAndTransportUnitsByJobId(jobId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetJobWithLoadsAndTransportUnitsByJobId: {ex.Message}");
                 throw;
             }
         }
@@ -193,6 +218,38 @@ namespace eshift.Service.Impl
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in AcceptJobRequest: {ex.Message}");
+                throw;
+            }
+        }
+
+        public List<JobGridDto> GetAllJobsForGridByCustomerId(string customerId)
+        {
+            try
+            {
+                // get the customer model
+                var customerModel = customerDao.GetCustomerByCusId(customerId);
+                if (customerModel == null)
+                    throw new KeyNotFoundException("Customer not found.");
+                int? customerDbId = customerModel.Id;
+
+                // get all jobs for the customer
+                var jobModels = jobDao.GetAllJobsByCustomerId(customerDbId);
+                if (jobModels == null || jobModels.Count == 0)
+                    throw new KeyNotFoundException("No jobs found for the customer.");
+
+                // map to grid dtos
+                var gridDtos = new List<JobGridDto>();
+                foreach (var jobModel in jobModels)
+                {
+                    // get status name using JobStatusEnum
+                    var statusName = ((JobStatusEnum)jobModel.StatusId).ToString();
+                    gridDtos.Add(JobMapper.ToGridDto(jobModel, customerModel.CusId, customerModel.FirstName, statusName));
+                }
+                return gridDtos;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetAllJobsForGridByCustomerId: {ex.Message}");
                 throw;
             }
         }
@@ -246,18 +303,53 @@ namespace eshift.Service.Impl
         public TransportUnitDto? GetTransportUnitById(string tuId)
         {
             var tuModel = transportUnitDao.GetTransportUnitByTuId(tuId);
-            return tuModel != null ? TransportUnitMapper.ToDto(tuModel) : null;
+            
+            if (tuModel == null)
+            {
+                return null;
+            }
+            // get vehicle registration number
+            var vehicleModel = vehicleDao.GetVehicleById(tuModel.VehicleId);
+            if (vehicleModel != null)
+            {
+                return TransportUnitMapper.ToDto(tuModel, vehicleModel.RegistrationNumber);
+            }
+            else
+            {
+                return TransportUnitMapper.ToDto(tuModel);
+            }
+            
         }
 
         public void CreateJob(CreateJobFormDto dto)
         {
             // Generate job id
             string jobId = JobIdGenerator.GenerateNextJobId();
-            int statusId = dto.TransportUnits.Count > 0 ? (int)JobStatusEnum.IN_PROGRESS : (int)JobStatusEnum.ACCEPTED;
+            // Determine initial status
+            int statusId = 0;
+            if (dto.Status.HasValue)
+            {
+                statusId = (int)dto.Status.Value;
+
+            } else
+            {
+                statusId = dto.TransportUnits.Count > 0 ? (int)JobStatusEnum.IN_PROGRESS : (int)JobStatusEnum.ACCEPTED;
+            }
+                
             // Generate load ids
             foreach (var load in dto.Loads)
                 load.LoadId = LoadIdGenerator.GenerateNextLoadId();
             jobDao.CreateJob(jobId, dto, statusId);
+        }
+
+        public bool UpdateJobWithLoadsAndTransportUnitsByJobId(string jobId, JobWithLoadsAndTransportUnitDto dto)
+        {
+            // generate new load ids for the new loads
+            foreach (var load in dto.NewLoads)
+            {
+                load.LoadId = LoadIdGenerator.GenerateNextLoadId();
+            }
+            return jobDao.UpdateJobWithLoadsAndTransportUnitsByJobId(jobId, dto);
         }
     }
 }

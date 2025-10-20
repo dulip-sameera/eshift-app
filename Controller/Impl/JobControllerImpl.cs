@@ -93,6 +93,17 @@ namespace eshift.Controller.Impl
                 throw;
             }
         }
+        public JobWithLoadsAndTransportUnitDto? GetJobWithLoadsAndTransportUnitsByJobId(string jobId)
+        {
+            try
+            {
+                return jobService.GetJobWithLoadsAndTransportUnitsByJobId(jobId);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
         public bool UpdateJobStatusByJobId(string jobId, JobStatusEnum status)
         {
             try
@@ -110,6 +121,30 @@ namespace eshift.Controller.Impl
             try
             {
                 return jobService.AcceptJobRequest(job);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public bool UpdateJobWithLoadsAndTransportUnitsByJobId(string jobId, JobWithLoadsAndTransportUnitDto dto)
+        {
+            try
+            {
+                return jobService.UpdateJobWithLoadsAndTransportUnitsByJobId(jobId, dto);
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public List<JobGridDto> GetAllJobsForGridByCustomerId(string customerId)
+        {
+            try
+            {
+                return jobService.GetAllJobsForGridByCustomerId(customerId);
             }
             catch (System.Exception ex)
             {

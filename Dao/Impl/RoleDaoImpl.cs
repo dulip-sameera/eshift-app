@@ -10,7 +10,7 @@ namespace eshift.Dao.Impl
         public List<RoleModel> GetAllRoles()
         {
             var list = new List<RoleModel>();
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT id, name FROM role";
             using var cmd = new MySqlCommand(query, conn);
             using var reader = cmd.ExecuteReader();
@@ -27,7 +27,7 @@ namespace eshift.Dao.Impl
 
         public RoleModel? GetRoleById(int id)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT id, name FROM role WHERE id = @id LIMIT 1";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@id", id);

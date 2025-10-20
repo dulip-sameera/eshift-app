@@ -95,6 +95,7 @@
             dgLoads.Margin = new Padding(3, 2, 3, 2);
             dgLoads.Name = "dgLoads";
             dgLoads.RowHeadersWidth = 51;
+            dgLoads.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgLoads.Size = new Size(340, 422);
             dgLoads.TabIndex = 148;
             // 
@@ -277,6 +278,7 @@
             dgTransportUnit.Margin = new Padding(3, 2, 3, 2);
             dgTransportUnit.Name = "dgTransportUnit";
             dgTransportUnit.RowHeadersWidth = 51;
+            dgTransportUnit.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgTransportUnit.Size = new Size(340, 422);
             dgTransportUnit.TabIndex = 151;
             // 
@@ -342,9 +344,11 @@
             // 
             // nmrcLoadVolume
             // 
+            nmrcLoadVolume.DecimalPlaces = 2;
             nmrcLoadVolume.Font = new Font("Segoe UI", 11.25F);
             nmrcLoadVolume.Location = new Point(510, 564);
             nmrcLoadVolume.Margin = new Padding(3, 2, 3, 2);
+            nmrcLoadVolume.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
             nmrcLoadVolume.Name = "nmrcLoadVolume";
             nmrcLoadVolume.Size = new Size(225, 27);
             nmrcLoadVolume.TabIndex = 162;
@@ -361,9 +365,11 @@
             // 
             // nmrcLoadWeight
             // 
+            nmrcLoadWeight.DecimalPlaces = 2;
             nmrcLoadWeight.Font = new Font("Segoe UI", 11.25F);
             nmrcLoadWeight.Location = new Point(510, 612);
             nmrcLoadWeight.Margin = new Padding(3, 2, 3, 2);
+            nmrcLoadWeight.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
             nmrcLoadWeight.Name = "nmrcLoadWeight";
             nmrcLoadWeight.Size = new Size(225, 27);
             nmrcLoadWeight.TabIndex = 164;
@@ -492,7 +498,6 @@
             lblPickUpErrorMessage.Size = new Size(81, 15);
             lblPickUpErrorMessage.TabIndex = 177;
             lblPickUpErrorMessage.Text = "error message";
-            lblPickUpErrorMessage.Visible = false;
             // 
             // lblDeliveryErrorMessage
             // 
@@ -503,7 +508,6 @@
             lblDeliveryErrorMessage.Size = new Size(81, 15);
             lblDeliveryErrorMessage.TabIndex = 178;
             lblDeliveryErrorMessage.Text = "error message";
-            lblDeliveryErrorMessage.Visible = false;
             // 
             // lblScheduleDateErrorMessage
             // 
@@ -514,7 +518,6 @@
             lblScheduleDateErrorMessage.Size = new Size(81, 15);
             lblScheduleDateErrorMessage.TabIndex = 179;
             lblScheduleDateErrorMessage.Text = "error message";
-            lblScheduleDateErrorMessage.Visible = false;
             // 
             // lblEstimatedCostErrorMessage
             // 
@@ -525,7 +528,6 @@
             lblEstimatedCostErrorMessage.Size = new Size(81, 15);
             lblEstimatedCostErrorMessage.TabIndex = 180;
             lblEstimatedCostErrorMessage.Text = "error message";
-            lblEstimatedCostErrorMessage.Visible = false;
             // 
             // lblLoadVoloumeErrorMessage
             // 
@@ -536,7 +538,6 @@
             lblLoadVoloumeErrorMessage.Size = new Size(81, 15);
             lblLoadVoloumeErrorMessage.TabIndex = 181;
             lblLoadVoloumeErrorMessage.Text = "error message";
-            lblLoadVoloumeErrorMessage.Visible = false;
             // 
             // lblLoadWeightErrorMessage
             // 
@@ -547,7 +548,6 @@
             lblLoadWeightErrorMessage.Size = new Size(81, 15);
             lblLoadWeightErrorMessage.TabIndex = 182;
             lblLoadWeightErrorMessage.Text = "error message";
-            lblLoadWeightErrorMessage.Visible = false;
             // 
             // CreateJobForm
             // 

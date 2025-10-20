@@ -36,13 +36,13 @@
             txtTransportUnitSearch = new TextBox();
             lblTransportUnitId = new Label();
             dgTransportUnit = new DataGridView();
-            lblFormTitle = new Label();
-            btnRefresh = new Button();
             TUID = new DataGridViewTextBoxColumn();
             Vehicle = new DataGridViewTextBoxColumn();
             Driver = new DataGridViewTextBoxColumn();
             Assistant = new DataGridViewTextBoxColumn();
             Available = new DataGridViewTextBoxColumn();
+            lblFormTitle = new Label();
+            btnRefresh = new Button();
             ((System.ComponentModel.ISupportInitialize)dgTransportUnit).BeginInit();
             SuspendLayout();
             // 
@@ -52,11 +52,10 @@
             btnClose.Cursor = Cursors.Hand;
             btnClose.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(1170, 39);
-            btnClose.Margin = new Padding(3, 4, 3, 4);
+            btnClose.Location = new Point(1024, 29);
             btnClose.Name = "btnClose";
-            btnClose.Padding = new Padding(0, 7, 0, 7);
-            btnClose.Size = new Size(96, 49);
+            btnClose.Padding = new Padding(0, 5, 0, 5);
+            btnClose.Size = new Size(84, 37);
             btnClose.TabIndex = 35;
             btnClose.Text = "Close";
             btnClose.UseVisualStyleBackColor = false;
@@ -68,11 +67,10 @@
             btnDeleteTransportUnit.Cursor = Cursors.Hand;
             btnDeleteTransportUnit.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDeleteTransportUnit.ForeColor = Color.White;
-            btnDeleteTransportUnit.Location = new Point(1003, 39);
-            btnDeleteTransportUnit.Margin = new Padding(3, 4, 3, 4);
+            btnDeleteTransportUnit.Location = new Point(878, 29);
             btnDeleteTransportUnit.Name = "btnDeleteTransportUnit";
-            btnDeleteTransportUnit.Padding = new Padding(0, 7, 0, 7);
-            btnDeleteTransportUnit.Size = new Size(96, 49);
+            btnDeleteTransportUnit.Padding = new Padding(0, 5, 0, 5);
+            btnDeleteTransportUnit.Size = new Size(84, 37);
             btnDeleteTransportUnit.TabIndex = 34;
             btnDeleteTransportUnit.Text = "Delete";
             btnDeleteTransportUnit.UseVisualStyleBackColor = false;
@@ -84,11 +82,10 @@
             btnUpdateTransportUnit.Cursor = Cursors.Hand;
             btnUpdateTransportUnit.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnUpdateTransportUnit.ForeColor = Color.White;
-            btnUpdateTransportUnit.Location = new Point(885, 37);
-            btnUpdateTransportUnit.Margin = new Padding(3, 4, 3, 4);
+            btnUpdateTransportUnit.Location = new Point(774, 28);
             btnUpdateTransportUnit.Name = "btnUpdateTransportUnit";
-            btnUpdateTransportUnit.Padding = new Padding(0, 7, 0, 7);
-            btnUpdateTransportUnit.Size = new Size(96, 49);
+            btnUpdateTransportUnit.Padding = new Padding(0, 5, 0, 5);
+            btnUpdateTransportUnit.Size = new Size(84, 37);
             btnUpdateTransportUnit.TabIndex = 33;
             btnUpdateTransportUnit.Text = "Update";
             btnUpdateTransportUnit.UseVisualStyleBackColor = false;
@@ -100,11 +97,10 @@
             btnCreateTransportUnit.Cursor = Cursors.Hand;
             btnCreateTransportUnit.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCreateTransportUnit.ForeColor = Color.White;
-            btnCreateTransportUnit.Location = new Point(762, 37);
-            btnCreateTransportUnit.Margin = new Padding(3, 4, 3, 4);
+            btnCreateTransportUnit.Location = new Point(667, 28);
             btnCreateTransportUnit.Name = "btnCreateTransportUnit";
-            btnCreateTransportUnit.Padding = new Padding(0, 7, 0, 7);
-            btnCreateTransportUnit.Size = new Size(96, 49);
+            btnCreateTransportUnit.Padding = new Padding(0, 5, 0, 5);
+            btnCreateTransportUnit.Size = new Size(84, 37);
             btnCreateTransportUnit.TabIndex = 32;
             btnCreateTransportUnit.Text = "Create";
             btnCreateTransportUnit.UseVisualStyleBackColor = false;
@@ -116,11 +112,10 @@
             btnTransportUnitSearch.Cursor = Cursors.Hand;
             btnTransportUnitSearch.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnTransportUnitSearch.ForeColor = Color.White;
-            btnTransportUnitSearch.Location = new Point(470, 48);
-            btnTransportUnitSearch.Margin = new Padding(3, 4, 3, 4);
+            btnTransportUnitSearch.Location = new Point(411, 36);
             btnTransportUnitSearch.Name = "btnTransportUnitSearch";
-            btnTransportUnitSearch.Padding = new Padding(0, 7, 0, 7);
-            btnTransportUnitSearch.Size = new Size(96, 49);
+            btnTransportUnitSearch.Padding = new Padding(0, 5, 0, 5);
+            btnTransportUnitSearch.Size = new Size(84, 37);
             btnTransportUnitSearch.TabIndex = 31;
             btnTransportUnitSearch.Text = "Search";
             btnTransportUnitSearch.UseVisualStyleBackColor = false;
@@ -129,19 +124,18 @@
             // txtTransportUnitSearch
             // 
             txtTransportUnitSearch.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtTransportUnitSearch.Location = new Point(280, 54);
-            txtTransportUnitSearch.Margin = new Padding(3, 4, 3, 4);
+            txtTransportUnitSearch.Location = new Point(245, 40);
             txtTransportUnitSearch.Name = "txtTransportUnitSearch";
-            txtTransportUnitSearch.Size = new Size(182, 34);
+            txtTransportUnitSearch.Size = new Size(160, 29);
             txtTransportUnitSearch.TabIndex = 30;
             // 
             // lblTransportUnitId
             // 
             lblTransportUnitId.AutoSize = true;
             lblTransportUnitId.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTransportUnitId.Location = new Point(220, 59);
+            lblTransportUnitId.Location = new Point(192, 44);
             lblTransportUnitId.Name = "lblTransportUnitId";
-            lblTransportUnitId.Size = new Size(60, 25);
+            lblTransportUnitId.Size = new Size(47, 20);
             lblTransportUnitId.TabIndex = 29;
             lblTransportUnitId.Text = "TU ID";
             // 
@@ -151,39 +145,12 @@
             dgTransportUnit.BackgroundColor = Color.Azure;
             dgTransportUnit.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgTransportUnit.Columns.AddRange(new DataGridViewColumn[] { TUID, Vehicle, Driver, Assistant, Available });
-            dgTransportUnit.Location = new Point(18, 113);
-            dgTransportUnit.Margin = new Padding(3, 4, 3, 4);
+            dgTransportUnit.Location = new Point(16, 85);
             dgTransportUnit.Name = "dgTransportUnit";
             dgTransportUnit.RowHeadersWidth = 51;
-            dgTransportUnit.Size = new Size(1245, 593);
+            dgTransportUnit.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgTransportUnit.Size = new Size(1089, 445);
             dgTransportUnit.TabIndex = 28;
-            // 
-            // lblFormTitle
-            // 
-            lblFormTitle.AutoSize = true;
-            lblFormTitle.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblFormTitle.ForeColor = SystemColors.WindowText;
-            lblFormTitle.Location = new Point(18, 35);
-            lblFormTitle.Name = "lblFormTitle";
-            lblFormTitle.Size = new Size(194, 37);
-            lblFormTitle.TabIndex = 27;
-            lblFormTitle.Text = "Transport Unit";
-            // 
-            // btnRefresh
-            // 
-            btnRefresh.BackColor = SystemColors.HotTrack;
-            btnRefresh.Cursor = Cursors.Hand;
-            btnRefresh.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnRefresh.ForeColor = Color.White;
-            btnRefresh.Location = new Point(572, 48);
-            btnRefresh.Margin = new Padding(3, 4, 3, 4);
-            btnRefresh.Name = "btnRefresh";
-            btnRefresh.Padding = new Padding(0, 7, 0, 7);
-            btnRefresh.Size = new Size(96, 49);
-            btnRefresh.TabIndex = 36;
-            btnRefresh.Text = "Refresh";
-            btnRefresh.UseVisualStyleBackColor = false;
-            btnRefresh.Click += btnRefresh_Click;
             // 
             // TUID
             // 
@@ -220,12 +187,38 @@
             Available.MinimumWidth = 6;
             Available.Name = "Available";
             // 
+            // lblFormTitle
+            // 
+            lblFormTitle.AutoSize = true;
+            lblFormTitle.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblFormTitle.ForeColor = SystemColors.WindowText;
+            lblFormTitle.Location = new Point(16, 26);
+            lblFormTitle.Name = "lblFormTitle";
+            lblFormTitle.Size = new Size(152, 30);
+            lblFormTitle.TabIndex = 27;
+            lblFormTitle.Text = "Transport Unit";
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.BackColor = SystemColors.HotTrack;
+            btnRefresh.Cursor = Cursors.Hand;
+            btnRefresh.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnRefresh.ForeColor = Color.White;
+            btnRefresh.Location = new Point(500, 36);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Padding = new Padding(0, 5, 0, 5);
+            btnRefresh.Size = new Size(84, 37);
+            btnRefresh.TabIndex = 36;
+            btnRefresh.Text = "Refresh";
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
+            // 
             // TransportUnitForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
-            ClientSize = new Size(1286, 743);
+            ClientSize = new Size(1125, 557);
             Controls.Add(btnRefresh);
             Controls.Add(btnClose);
             Controls.Add(btnDeleteTransportUnit);
@@ -236,7 +229,6 @@
             Controls.Add(lblTransportUnitId);
             Controls.Add(dgTransportUnit);
             Controls.Add(lblFormTitle);
-            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "TransportUnitForm";
             StartPosition = FormStartPosition.CenterScreen;

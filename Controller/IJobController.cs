@@ -10,8 +10,10 @@ namespace eshift.Controller
         List<JobGridDto> GetJobRequestByStatus(JobStatusEnum status);
         List<JobGridDto> FilterJobByJobId(string jobId);
         JobWithLoadsDto? GetJobWithLoadsByJobId(string jobId);
+        JobWithLoadsAndTransportUnitDto? GetJobWithLoadsAndTransportUnitsByJobId(string jobId);
         bool AcceptJobRequest(JobDto jobDto);
         bool UpdateJobStatusByJobId(string jobId, JobStatusEnum status);
+        bool UpdateJobWithLoadsAndTransportUnitsByJobId(string jobId, JobWithLoadsAndTransportUnitDto dto);
         void DeleteJobByJobId(string jobId, JobStatusEnum status);
         void UpdateJob(string jobId, JobDto job);
         JobGridDto? GetJobForGridByJobId(string jobId);
@@ -19,5 +21,6 @@ namespace eshift.Controller
         TransportUnitDto? GetTransportUnitById(string tuId);
         VehicleDto? GetVehicleById(int vehicleId);
         void CreateJob(CreateJobFormDto dto);
+        List<JobGridDto> GetAllJobsForGridByCustomerId(string customerId);
     }
 }

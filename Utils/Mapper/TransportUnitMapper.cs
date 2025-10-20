@@ -32,6 +32,20 @@ namespace eshift.Utils.Mapper
             );
         }
 
+        public static TransportUnitDto? ToDto(TransportUnitModel model, string vehicleRegistrationNumber)
+        {
+            if (model == null) return null;
+            return new TransportUnitDto(
+                id: model.Id,
+                tuId: model.TuId,
+                vehicleId: model.VehicleId,
+                vehicleRegistrationNumber: vehicleRegistrationNumber,
+                driverId: model.DriverId,
+                assistantId: model.AssistantId,
+                available: model.Available
+            );
+        }
+
         // For grid mapping, you need to provide vehicle registration, staff info, etc.
         public static TransportUnitGridDto ToGridDto(
             TransportUnitModel model,

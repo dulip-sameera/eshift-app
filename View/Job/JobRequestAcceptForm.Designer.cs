@@ -45,13 +45,13 @@
             txtEstimatedCost = new TextBox();
             btnReject = new Button();
             dgLoads = new DataGridView();
-            lblLoad = new Label();
             LoadID = new DataGridViewTextBoxColumn();
             Id = new DataGridViewTextBoxColumn();
             Description = new DataGridViewTextBoxColumn();
             Volume = new DataGridViewTextBoxColumn();
             Weight = new DataGridViewTextBoxColumn();
             JobId = new DataGridViewTextBoxColumn();
+            lblLoad = new Label();
             ((System.ComponentModel.ISupportInitialize)dgLoads).BeginInit();
             SuspendLayout();
             // 
@@ -235,18 +235,9 @@
             dgLoads.Columns.AddRange(new DataGridViewColumn[] { LoadID, Id, Description, Volume, Weight, JobId });
             dgLoads.Location = new Point(466, 146);
             dgLoads.Name = "dgLoads";
+            dgLoads.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgLoads.Size = new Size(672, 562);
             dgLoads.TabIndex = 130;
-            // 
-            // lblLoad
-            // 
-            lblLoad.AutoSize = true;
-            lblLoad.Font = new Font("Segoe UI Semibold", 12F);
-            lblLoad.Location = new Point(466, 110);
-            lblLoad.Name = "lblLoad";
-            lblLoad.Size = new Size(53, 21);
-            lblLoad.TabIndex = 131;
-            lblLoad.Text = "Loads";
             // 
             // LoadID
             // 
@@ -285,6 +276,16 @@
             JobId.HeaderText = "JobId";
             JobId.Name = "JobId";
             JobId.Visible = false;
+            // 
+            // lblLoad
+            // 
+            lblLoad.AutoSize = true;
+            lblLoad.Font = new Font("Segoe UI Semibold", 12F);
+            lblLoad.Location = new Point(466, 110);
+            lblLoad.Name = "lblLoad";
+            lblLoad.Size = new Size(53, 21);
+            lblLoad.TabIndex = 131;
+            lblLoad.Text = "Loads";
             // 
             // JobRequestAcceptForm
             // 

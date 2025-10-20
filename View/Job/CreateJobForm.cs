@@ -1,11 +1,12 @@
 ﻿using eshift.Controller;
 using eshift.Controller.Impl;
 using eshift.Dto;
-using eshift.Utils.Validation;
 using eshift.Enums;
+using eshift.Utils.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Windows.Forms;
 
 namespace eshift.View.Job
@@ -32,6 +33,7 @@ namespace eshift.View.Job
                 { "volume", lblLoadVoloumeErrorMessage },
                 { "weight", lblLoadWeightErrorMessage }
             };
+            dtTmPckrScheduledDate.Format = DateTimePickerFormat.Short;
             HideAllErrorLabels();
         }
 
@@ -63,38 +65,77 @@ namespace eshift.View.Job
 
         private void btnAddLoad_Click(object sender, EventArgs e)
         {
-            HideAllErrorLabels();
-            string description = txtLoadDescription.Text.Trim();
-            double volume = Convert.ToDouble(nmrcLoadVolume.Value);
-            double weight = Convert.ToDouble(nmrcLoadWeight.Value);
-            var errors = LoadValidator.Validate(volume, weight);
-            if (errors.Count > 0)
+            try
             {
-                if (errors.ContainsKey("volume"))
-                    lblLoadVoloumeErrorMessage.Text = errors["volume"];
-                if (errors.ContainsKey("weight"))
-                    lblLoadWeightErrorMessage.Text = errors["weight"];
-                return;
+                HideAllErrorLabels();
+                string description = txtLoadDescription.Text.Trim();
+                double volume = Convert.ToDouble(nmrcLoadVolume.Value);
+                double weight = Convert.ToDouble(nmrcLoadWeight.Value);
+                var errors = LoadValidator.Validate(volume, weight);
+                if (errors.Count > 0)
+                {
+                    if (errors.ContainsKey("volume"))
+                        lblLoadVoloumeErrorMessage.Text = errors["volume"];
+                    if (errors.ContainsKey("weight"))
+                        lblLoadWeightErrorMessage.Text = errors["weight"];
+                    return;
+                }
+                var loadDto = new LoadDto(null, null, description, volume, weight, 0); // JobId will be set later
+                loadList.Add(loadDto);
+                dgLoads.DataSource = null;
+                dgLoads.DataSource = loadList;
+                UpdateEstimatedCost();
             }
-            var loadDto = new LoadDto(null, null, description, volume, weight, 0); // JobId will be set later
-            loadList.Add(loadDto);
-            dgLoads.DataSource = null;
-            dgLoads.DataSource = loadList;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error adding load: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdateEstimatedCost()
+        {
+            try
+            {
+                double volumeUnitPrice = double.Parse(ConfigurationManager.AppSettings["VolumeUnitPrice"] ?? "50.0");
+                double weightUnitPrice = double.Parse(ConfigurationManager.AppSettings["WeightUnitPrice"] ?? "10.0");
+
+                double totalVolume = loadList.Sum(load => load.Volume);
+                double totalWeight = loadList.Sum(load => load.Weight);
+
+                double estimatedCost = (totalVolume * volumeUnitPrice) + (totalWeight * weightUnitPrice);
+                txtEstimatedCost.Text = estimatedCost.ToString("F2");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error calculating estimated cost: {ex.Message}");
+            }
         }
 
         private void btnRemoveLoad_Click(object sender, EventArgs e)
         {
-            if (dgLoads.SelectedRows.Count > 0)
+            try
             {
-                var selectedLoad = dgLoads.SelectedRows[0].DataBoundItem as LoadDto;
-                if (selectedLoad != null)
-                    loadList.Remove(selectedLoad);
+                if (dgLoads.SelectedRows.Count > 0)
+                {
+                    var selectedLoad = dgLoads.SelectedRows[0].DataBoundItem as LoadDto;
+                    if (selectedLoad != null)
+                    {
+                        loadList.Remove(selectedLoad);
+                        UpdateEstimatedCost();
+                    }
+                        
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error removing load: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnClearLoad_Click(object sender, EventArgs e)
         {
             loadList.Clear();
+            UpdateEstimatedCost();
         }
 
         private void btnAddTransportUnit_Click(object sender, EventArgs e)
@@ -112,11 +153,6 @@ namespace eshift.View.Job
                 if (tu == null)
                 {
                     MessageBox.Show("Transport unit not found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (tu.Available != TransportUnitAvailableEnum.YES)
-                {
-                    MessageBox.Show("Transport unit is not available.", "Not Available", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 transportUnitList.Add(tu);
@@ -146,65 +182,66 @@ namespace eshift.View.Job
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            HideAllErrorLabels();
-            if (selectedCustomer == null)
-            {
-                MessageBox.Show("Please add a valid customer.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            string pickup = rchTxtPickup.Text.Trim();
-            string delivery = rchTxtDelivery.Text.Trim();
-            DateTime scheduledDate = dtTmPckrScheduledDate.Value;
-            string estimatedCostStr = txtEstimatedCost.Text.Trim();
-            string description = rchTxtJobDescription.Text.Trim();
-            var errors = JobFormValidator.Validate(pickup, delivery, scheduledDate, estimatedCostStr);
-            if (errors.Count > 0)
-            {
-                if (errors.ContainsKey("pickup"))
-                    lblPickUpErrorMessage.Text = errors["pickup"];
-                if (errors.ContainsKey("delivery"))
-                    lblDeliveryErrorMessage.Text = errors["delivery"];
-                if (errors.ContainsKey("scheduledDate"))
-                    lblScheduleDateErrorMessage.Text = errors["scheduledDate"];
-                if (errors.ContainsKey("estimatedCost"))
-                    lblEstimatedCostErrorMessage.Text = errors["estimatedCost"];
-                return;
-            }
-            double estimatedCost = double.Parse(estimatedCostStr);
-            // Check transport unit volume/weight vs load volume/weight
-            if (transportUnitList.Count > 0)
-            {
-                double tuTotalVolume = 0, tuTotalWeight = 0;
-                foreach (var tu in transportUnitList)
-                {
-                    var vehicle = jobController.GetVehicleById(tu.VehicleId);
-                    tuTotalVolume += vehicle.ContainerVolume;
-                    tuTotalWeight += vehicle.MaxWeight;
-                }
-                double loadTotalVolume = 0, loadTotalWeight = 0;
-                foreach (var load in loadList)
-                {
-                    loadTotalVolume += load.Volume;
-                    loadTotalWeight += load.Weight;
-                }
-                if (tuTotalVolume < loadTotalVolume || tuTotalWeight < loadTotalWeight)
-                {
-                    MessageBox.Show("Transport units do not have enough capacity for the loads. Add more transport units or reduce loads.", "Capacity Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-            var dto = new CreateJobFormDto(
-                selectedCustomer.Id ?? 0,
-                pickup,
-                delivery,
-                string.IsNullOrWhiteSpace(description) ? null : description,
-                scheduledDate,
-                estimatedCost,
-                new List<LoadDto>(loadList),
-                new List<TransportUnitDto>(transportUnitList)
-            );
             try
             {
+                HideAllErrorLabels();
+                if (selectedCustomer == null)
+                {
+                    MessageBox.Show("Please add a valid customer.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                string pickup = rchTxtPickup.Text.Trim();
+                string delivery = rchTxtDelivery.Text.Trim();
+                DateTime scheduledDate = dtTmPckrScheduledDate.Value.Date;
+                string estimatedCostStr = txtEstimatedCost.Text.Trim();
+                string description = rchTxtJobDescription.Text.Trim();
+                var errors = JobFormValidator.Validate(pickup, delivery, scheduledDate, estimatedCostStr);
+                if (errors.Count > 0)
+                {
+                    if (errors.ContainsKey("pickup"))
+                        lblPickUpErrorMessage.Text = errors["pickup"];
+                    if (errors.ContainsKey("delivery"))
+                        lblDeliveryErrorMessage.Text = errors["delivery"];
+                    if (errors.ContainsKey("scheduledDate"))
+                        lblScheduleDateErrorMessage.Text = errors["scheduledDate"];
+                    if (errors.ContainsKey("estimatedCost"))
+                        lblEstimatedCostErrorMessage.Text = errors["estimatedCost"];
+                    return;
+                }
+                double estimatedCost = double.Parse(estimatedCostStr);
+                // Check transport unit volume/weight vs load volume/weight
+                if (transportUnitList.Count > 0)
+                {
+                    double tuTotalVolume = 0, tuTotalWeight = 0;
+                    foreach (var tu in transportUnitList)
+                    {
+                        var vehicle = jobController.GetVehicleById(tu.VehicleId);
+                        tuTotalVolume += vehicle.ContainerVolume;
+                        tuTotalWeight += vehicle.MaxWeight;
+                    }
+                    double loadTotalVolume = 0, loadTotalWeight = 0;
+                    foreach (var load in loadList)
+                    {
+                        loadTotalVolume += load.Volume;
+                        loadTotalWeight += load.Weight;
+                    }
+                    if (tuTotalVolume < loadTotalVolume || tuTotalWeight < loadTotalWeight)
+                    {
+                        MessageBox.Show("Transport units do not have enough capacity for the loads. Add more transport units or reduce loads.", "Capacity Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                var dto = new CreateJobFormDto(
+                    selectedCustomer.Id ?? 0,
+                    pickup,
+                    delivery,
+                    string.IsNullOrWhiteSpace(description) ? null : description,
+                    scheduledDate,
+                    estimatedCost,
+                    new List<LoadDto>(loadList),
+                    new List<TransportUnitDto>(transportUnitList)
+                );
+            
                 jobController.CreateJob(dto);
                 MessageBox.Show("Job created successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 windowClose();

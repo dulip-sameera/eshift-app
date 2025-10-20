@@ -1,4 +1,4 @@
-﻿using eshift.Controller;
+using eshift.Controller;
 using eshift.Controller.Impl;
 using eshift.Dto;
 using eshift.Enums;
@@ -70,6 +70,10 @@ namespace eshift.View.TransportUnit
                     txtContainerMaxWeight.Text = selectedVehicleDto.MaxWeight.ToString();
                     vehicleDbId = transportUnitController.GetVehicleDbIdByRegNo(vehicleRegNo);
                 }
+
+                // set the availability
+                cmbAvailability.Text = transportUnitGridDto.Available;
+
             }
             catch (Exception ex)
             {
@@ -253,7 +257,7 @@ namespace eshift.View.TransportUnit
                     vehicleId: vehicleDbId.Value,
                     driverId: driverDbId.Value,
                     assistantId: assistantDbId.Value,
-                    available: transportUnitGridDto.Available == "Yes" ? TransportUnitAvailableEnum.YES : TransportUnitAvailableEnum.NO
+                    available: cmbAvailability.Text.Trim() == "Yes" ? TransportUnitAvailableEnum.YES : TransportUnitAvailableEnum.NO
                 );
 
                 transportUnitController.UpdateTransportUnit(transportUnitDto);

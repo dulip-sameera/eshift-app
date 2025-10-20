@@ -13,10 +13,11 @@ namespace eshift.Dao
         VehicleModel? GetVehicleByRegNo(string regNo);
         (string vehicleRegNo, string driverStaffId, string driverFirstName, string assistantStaffId, string assistantFirstName) GetGridInfoForTransportUnit(TransportUnitModel model);
 
-        // New methods for existence checks
         bool IsDriverInTransportUnit(int driverDbId);
         bool IsAssistantInTransportUnit(int assistantDbId);
         bool IsVehicleInTransportUnit(int vehicleDbId);
-        bool UpdateTransportUnit(TransportUnitModel model); // Add this to the interface
+        bool UpdateTransportUnit(TransportUnitModel model); 
+        int GetTotalTransportUnitCount();
+        int GetTransportUnitCountrByAvailability(string availability);
     }
 }

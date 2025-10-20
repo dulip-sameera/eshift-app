@@ -11,7 +11,7 @@ namespace eshift.Dao.Impl
         public List<(CustomerModel, string)> GetAllCustomersWithUsernames()
         {
             var customers = new List<(CustomerModel, string)>();
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT c.id, c.cus_id, c.first_name, c.last_name, c.email, c.phone, c.address, c.city, c.zip_code, 
                                     c.user_account, cs.id AS status_id, cs.name AS status_name, u.username
                              FROM customer c
@@ -44,7 +44,7 @@ namespace eshift.Dao.Impl
 
         public (CustomerModel, string)? GetCustomerWithUsernameByCusId(string cusId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT c.id, c.cus_id, c.first_name, c.last_name, c.email, c.phone, c.address, c.city, c.zip_code, 
                                     c.user_account, cs.id AS status_id, cs.name AS status_name, u.username
                              FROM customer c
@@ -80,7 +80,7 @@ namespace eshift.Dao.Impl
 
         public bool UpdateCustomerStatusByCusId(string cusId, int statusId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "UPDATE customer SET status = @statusId WHERE cus_id = @cusId";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@statusId", statusId);
@@ -90,7 +90,7 @@ namespace eshift.Dao.Impl
 
         public bool CreateCustomer(CustomerModel customer)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"INSERT INTO customer (cus_id, first_name, last_name, email, phone, address, city, zip_code, status) 
                              VALUES (@cusId, @firstName, @lastName, @email, @phone, @address, @city, @zipCode, @status)";
             using var cmd = new MySqlCommand(query, conn);
@@ -108,7 +108,7 @@ namespace eshift.Dao.Impl
 
         public string? GetLastCustomerId()
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT cus_id FROM customer ORDER BY id DESC LIMIT 1";
             using var cmd = new MySqlCommand(query, conn);
             var result = cmd.ExecuteScalar();
@@ -117,7 +117,7 @@ namespace eshift.Dao.Impl
 
         public bool UpdateCustomer(string cusId, CustomerModel customer)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"UPDATE customer SET 
                                 first_name = @firstName,
                                 last_name = @lastName,
@@ -145,7 +145,7 @@ namespace eshift.Dao.Impl
 
         public CustomerModel? GetCustomerByCusId(string cusId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT id, cus_id, first_name, last_name, email, phone, address, city, zip_code, status, user_account FROM customer WHERE cus_id = @cusId LIMIT 1";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@cusId", cusId);
@@ -172,7 +172,7 @@ namespace eshift.Dao.Impl
 
         public CustomerModel? GetCustomerByUseraccount(int userAccount)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT id, cus_id, first_name, last_name, email, phone, address, city, zip_code, status, user_account FROM customer WHERE user_account = @userAccount LIMIT 1";
             try
             {
@@ -207,7 +207,7 @@ namespace eshift.Dao.Impl
 
         public CustomerModel? GetCustomerById(int id)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT id, cus_id, first_name, last_name, email, phone, address, city, zip_code, status, user_account FROM customer WHERE id = @id LIMIT 1";
             try
             {
@@ -237,6 +237,41 @@ namespace eshift.Dao.Impl
             {
                 Console.WriteLine($"Error in GetCustomerById: {ex.Message}");
                 throw;
+            }
+        }
+
+        public int GetTotalCustomersCountByStatus(int statusId)
+        {
+            try
+            {
+                using var conn = DatabaseConnection.Instance.Connection;
+                string query = "SELECT COUNT(*) FROM customer WHERE status = @statusId";
+                using var cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@statusId", statusId);
+                var result = cmd.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetTotalCustomersCountByStatus: {ex.Message}");
+                throw new Exception($"Failed to get customer count for status {statusId}", ex);
+            }
+        }
+
+        public int GetTotalCustomersCount()
+        {
+            try
+            {
+                using var conn = DatabaseConnection.Instance.Connection;
+                string query = "SELECT COUNT(*) FROM customer";
+                using var cmd = new MySqlCommand(query, conn);
+                var result = cmd.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetTotalCustomersCount: {ex.Message}");
+                throw new Exception("Failed to get total customer count", ex);
             }
         }
     }

@@ -11,7 +11,7 @@ namespace eshift.Dao.Impl
         public List<TransportUnitModel> GetAllTransportUnits()
         {
             var list = new List<TransportUnitModel>();
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT id, tu_id, vehicle, driver, assistant, available FROM transport_unit";
             using var cmd = new MySqlCommand(query, conn);
             using var reader = cmd.ExecuteReader();
@@ -32,7 +32,7 @@ namespace eshift.Dao.Impl
 
         public TransportUnitModel? GetTransportUnitByTuId(string tuId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT id, tu_id, vehicle, driver, assistant, available FROM transport_unit WHERE tu_id = @tuId LIMIT 1";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@tuId", tuId);
@@ -54,7 +54,7 @@ namespace eshift.Dao.Impl
 
         public bool DeleteTransportUnitByTuId(string tuId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "DELETE FROM transport_unit WHERE tu_id = @tuId";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@tuId", tuId);
@@ -63,7 +63,7 @@ namespace eshift.Dao.Impl
 
         public bool CreateTransportUnit(TransportUnitModel model)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"INSERT INTO transport_unit (tu_id, vehicle, driver, assistant, available)
                              VALUES (@tuId, @vehicle, @driver, @assistant, @available)";
             using var cmd = new MySqlCommand(query, conn);
@@ -77,7 +77,7 @@ namespace eshift.Dao.Impl
 
         public string? GetLastTransportUnitId()
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT tu_id FROM transport_unit ORDER BY id DESC LIMIT 1";
             using var cmd = new MySqlCommand(query, conn);
             var result = cmd.ExecuteScalar();
@@ -86,7 +86,7 @@ namespace eshift.Dao.Impl
 
         public VehicleModel? GetVehicleByRegNo(string regNo)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT id, brand, model, registration_number, container_volume, max_weight FROM vehicle WHERE registration_number = @regNo LIMIT 1";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@regNo", regNo);
@@ -109,7 +109,7 @@ namespace eshift.Dao.Impl
         // Helper for grid info: fetch vehicle reg no, driver/assistant staff id and first name
         public (string vehicleRegNo, string driverStaffId, string driverFirstName, string assistantStaffId, string assistantFirstName) GetGridInfoForTransportUnit(TransportUnitModel model)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"
                 SELECT v.registration_number, sd.staff_id AS driver_staff_id, sd.first_name AS driver_first_name,
                        sa.staff_id AS assistant_staff_id, sa.first_name AS assistant_first_name
@@ -138,7 +138,7 @@ namespace eshift.Dao.Impl
 
         public bool IsDriverInTransportUnit(int driverDbId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT COUNT(*) FROM transport_unit WHERE driver = @driverDbId";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@driverDbId", driverDbId);
@@ -148,7 +148,7 @@ namespace eshift.Dao.Impl
 
         public bool IsAssistantInTransportUnit(int assistantDbId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT COUNT(*) FROM transport_unit WHERE assistant = @assistantDbId";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@assistantDbId", assistantDbId);
@@ -158,7 +158,7 @@ namespace eshift.Dao.Impl
 
         public bool IsVehicleInTransportUnit(int vehicleDbId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT COUNT(*) FROM transport_unit WHERE vehicle = @vehicleDbId";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@vehicleDbId", vehicleDbId);
@@ -168,7 +168,7 @@ namespace eshift.Dao.Impl
 
         public bool UpdateTransportUnit(TransportUnitModel model)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"UPDATE transport_unit SET vehicle = @vehicle, driver = @driver, assistant = @assistant, available = @available WHERE tu_id = @tuId";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@vehicle", model.VehicleId);
@@ -177,6 +177,41 @@ namespace eshift.Dao.Impl
             cmd.Parameters.AddWithValue("@available", model.Available.ToString());
             cmd.Parameters.AddWithValue("@tuId", model.TuId);
             return cmd.ExecuteNonQuery() > 0;
+        }
+
+        public int GetTotalTransportUnitCount()
+        {
+            try
+            {
+                using var conn = DatabaseConnection.Instance.Connection;
+                string query = "SELECT COUNT(*) FROM transport_unit";
+                using var cmd = new MySqlCommand(query, conn);
+                var result = cmd.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetTotalTransportUnitCount: {ex.Message}");
+                throw new Exception("Failed to get total transport unit count", ex);
+            }
+        }
+
+        public int GetTransportUnitCountrByAvailability(string availability)
+        {
+            try
+            {
+                using var conn = DatabaseConnection.Instance.Connection;
+                string query = "SELECT COUNT(*) FROM transport_unit WHERE available = @availability";
+                using var cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@availability", availability);
+                var result = cmd.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetTransportUnitCountrByAvailability: {ex.Message}");
+                throw new Exception($"Failed to get transport unit count for availability {availability}", ex);
+            }
         }
     }
 }

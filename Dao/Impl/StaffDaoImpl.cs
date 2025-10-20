@@ -11,7 +11,7 @@ namespace eshift.Dao.Impl
         public List<(StaffModel, string)> GetAllStaffWithUsernames()
         {
             var staffList = new List<(StaffModel, string)>();
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT s.id, s.staff_id, s.first_name, s.last_name, s.phone, s.email, s.licese_number, 
                                     st.id AS type_id, st.name AS type_name, s.user_account, s.status, u.username
                              FROM staff s
@@ -46,7 +46,7 @@ namespace eshift.Dao.Impl
 
         public (StaffModel, string)? GetStaffWithUsernameByStaffId(string staffId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT s.id, s.staff_id, s.first_name, s.last_name, s.phone, s.email, s.licese_number, 
                                     st.id AS type_id, st.name AS type_name, s.user_account, s.status, u.username
                              FROM staff s
@@ -82,7 +82,7 @@ namespace eshift.Dao.Impl
 
         public bool UpdateStaffStatusByStaffId(string staffId, StaffStatusEnum status)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"UPDATE staff SET status = @status WHERE staff_id = @staffId";
             using var cmd = new MySqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@status", status.ToString());
@@ -92,7 +92,7 @@ namespace eshift.Dao.Impl
 
         public bool CreateStaff(StaffModel staff)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"INSERT INTO staff (staff_id, first_name, last_name, phone, email, licese_number, type, user_account, status)
                              VALUES (@staffId, @firstName, @lastName, @phone, @email, @licenseNumber, @type, @userAccount, @status)";
             using var cmd = new MySqlCommand(query, conn);
@@ -110,7 +110,7 @@ namespace eshift.Dao.Impl
 
         public string? GetLastStaffId()
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT staff_id FROM staff ORDER BY id DESC LIMIT 1";
             using var cmd = new MySqlCommand(query, conn);
             var result = cmd.ExecuteScalar();
@@ -119,7 +119,7 @@ namespace eshift.Dao.Impl
 
         public bool UpdateStaff(string staffId, StaffModel staff)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"UPDATE staff SET 
                                 first_name = @firstName,
                                 last_name = @lastName,
@@ -145,7 +145,7 @@ namespace eshift.Dao.Impl
 
         public StaffModel? GetStaffByStaffId(string staffId)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT id, staff_id, first_name, last_name, phone, email, licese_number, type, user_account, status FROM staff WHERE staff_id = @staffId LIMIT 1";
             try
             {
@@ -180,7 +180,7 @@ namespace eshift.Dao.Impl
 
         public StaffModel? GetStaffByUseraccount(int userAccount)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = @"SELECT id, staff_id, first_name, last_name, phone, email, licese_number, type, user_account, status FROM staff WHERE user_account = @userAccount LIMIT 1";
             try
             {

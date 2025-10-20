@@ -14,5 +14,12 @@ namespace eshift.Dao
         List<JobModel> GetJobsByStatus(string status);
         List<JobModel> FilterJobsByJobId(string jobId);
         JobWithLoadsDto? GetJobWithLoadsByJobId(string jobId);
+        JobWithLoadsAndTransportUnitDto? GetJobWithLoadsAndTransportUnitsByJobId(string jobId);
+        bool UpdateJobWithLoadsAndTransportUnitsByJobId(string jobId, JobWithLoadsAndTransportUnitDto dto);
+        List<JobModel> GetAllJobsByCustomerId(int? customerId);
+        int GetTotalJobCount();
+        int GetTotalJobCountByStatus(int status);
+
+        List<JobModel> GetJobsBetweenCreatedAt(string startDate, string endDate);
     }
 }

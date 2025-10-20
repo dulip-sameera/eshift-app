@@ -18,8 +18,6 @@ namespace eshift.Utils.Validation
                 errors["estimatedCost"] = "Estimated cost is required.";
             else if (!double.TryParse(estimatedCost, out double cost))
                 errors["estimatedCost"] = "Estimated cost must be a numeric value.";
-            else if (cost < 5000)
-                errors["estimatedCost"] = "Estimated cost must be greater than 5000.";
             return errors;
         }
     }

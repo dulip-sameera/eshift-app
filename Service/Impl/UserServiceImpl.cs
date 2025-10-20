@@ -275,6 +275,7 @@ namespace eshift.Service.Impl
                 // Check user status based on role
                 string specialId;
                 string FullName;
+                int? dbId = 0;
                 if (user.Role?.Id == (int)UserRoleEnum.CUSTOMER)
                 {
                     var customer = customerDao.GetCustomerByUseraccount(user.Id);
@@ -284,6 +285,7 @@ namespace eshift.Service.Impl
                     }
                     specialId = customer.CusId;
                     FullName = $"{customer.FirstName} {customer.LastName}";
+                    dbId = customer.Id;
                 }
                 else if (user.Role?.Id == (int)UserRoleEnum.ADMIN)
                 {
@@ -294,6 +296,7 @@ namespace eshift.Service.Impl
                     }
                     specialId = staff.StaffId;
                     FullName = $"{staff.FirstName} {staff.LastName}";
+                    dbId = staff.Id;
                 }
                 else
                 {
@@ -302,7 +305,7 @@ namespace eshift.Service.Impl
 
                 // Set user session
                 var userRole = user.Role.Id == (int)UserRoleEnum.CUSTOMER ? UserRoleEnum.CUSTOMER : UserRoleEnum.ADMIN;
-                UserSession.SetUserSession(user.Id, specialId, user.Username, userRole, FullName);
+                UserSession.SetUserSession(user.Id, specialId, user.Username, userRole, FullName, dbId);
 
                 return true;
             }

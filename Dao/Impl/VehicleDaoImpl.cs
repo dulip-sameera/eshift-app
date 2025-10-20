@@ -9,7 +9,7 @@ namespace eshift.Dao.Impl
         public List<VehicleModel> GetVehicles()
         {
             var vehicles = new List<VehicleModel>();
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             using var cmd = new MySqlCommand("SELECT id, brand, model, registration_number, container_volume, max_weight FROM vehicle", conn);
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
@@ -28,7 +28,7 @@ namespace eshift.Dao.Impl
 
         public VehicleModel? GetVehicleByRegNo(string regNo)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             using var cmd = new MySqlCommand("SELECT id, brand, model, registration_number, container_volume, max_weight FROM vehicle WHERE registration_number = @regNo", conn);
             cmd.Parameters.AddWithValue("@regNo", regNo);
             using var reader = cmd.ExecuteReader();
@@ -48,7 +48,7 @@ namespace eshift.Dao.Impl
 
         public VehicleModel? GetVehicleById(int id)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             using var cmd = new MySqlCommand("SELECT id, brand, model, registration_number, container_volume, max_weight FROM vehicle WHERE id = @id", conn);
             cmd.Parameters.AddWithValue("@id", id);
             using var reader = cmd.ExecuteReader();
@@ -68,7 +68,7 @@ namespace eshift.Dao.Impl
 
         public bool DeleteVehicleByRegNo(string regNo)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             using var cmd = new MySqlCommand("DELETE FROM vehicle WHERE registration_number = @regNo", conn);
             cmd.Parameters.AddWithValue("@regNo", regNo);
             return cmd.ExecuteNonQuery() > 0;
@@ -76,7 +76,7 @@ namespace eshift.Dao.Impl
 
         public bool UpdateVehicle(string prevRegNo, VehicleModel vehicle)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             using var cmd = new MySqlCommand(@"UPDATE vehicle SET brand = @brand, model = @model, registration_number = @regNo, container_volume = @containerVolume, max_weight = @maxWeight WHERE registration_number = @prevRegNo", conn);
             cmd.Parameters.AddWithValue("@brand", vehicle.Brand);
             cmd.Parameters.AddWithValue("@model", vehicle.Model);
@@ -89,7 +89,7 @@ namespace eshift.Dao.Impl
 
         public bool CreateVehicle(VehicleModel vehicle)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             using var cmd = new MySqlCommand(@"INSERT INTO vehicle (brand, model, registration_number, container_volume, max_weight) VALUES (@brand, @model, @regNo, @containerVolume, @maxWeight)", conn);
             cmd.Parameters.AddWithValue("@brand", vehicle.Brand);
             cmd.Parameters.AddWithValue("@model", vehicle.Model);

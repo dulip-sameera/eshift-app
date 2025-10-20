@@ -36,23 +36,35 @@
             btnRemoveLoad = new Button();
             btnClearLoad = new Button();
             btnAddLoad = new Button();
-            numericUpDown2 = new NumericUpDown();
+            nmrcLoadWeight = new NumericUpDown();
             lblWeight = new Label();
-            numericUpDown1 = new NumericUpDown();
+            nmrcLoadVolume = new NumericUpDown();
             lblLoadVolume = new Label();
             txtLoadDescription = new TextBox();
             label1 = new Label();
-            txtCustomerName = new TextBox();
+            txtCustomer = new TextBox();
             lblCustomerName = new Label();
-            comboBox1 = new ComboBox();
+            cmbStatus = new ComboBox();
             lblStatus = new Label();
-            btnAddCustomer = new Button();
-            textBox1 = new TextBox();
+            txtActualCost = new TextBox();
             lblAcutalCost = new Label();
             dgTransportUnit = new DataGridView();
+            TId = new DataGridViewTextBoxColumn();
+            TuId = new DataGridViewTextBoxColumn();
+            VehicleId = new DataGridViewTextBoxColumn();
+            VehicleRegNo = new DataGridViewTextBoxColumn();
+            DriverId = new DataGridViewTextBoxColumn();
+            AssistantId = new DataGridViewTextBoxColumn();
+            Available = new DataGridViewTextBoxColumn();
             lblTransportUnit = new Label();
             lblLoad = new Label();
             dgLoads = new DataGridView();
+            LoadID = new DataGridViewTextBoxColumn();
+            Id = new DataGridViewTextBoxColumn();
+            Description = new DataGridViewTextBoxColumn();
+            Volume = new DataGridViewTextBoxColumn();
+            Weight = new DataGridViewTextBoxColumn();
+            JobId = new DataGridViewTextBoxColumn();
             txtEstimatedCost = new TextBox();
             lblEstimatedCost = new Label();
             dtTmPckrScheduledDate = new DateTimePicker();
@@ -65,11 +77,17 @@
             lblDescription = new Label();
             lblDelivery = new Label();
             lblPickup = new Label();
-            txtCustomerId = new TextBox();
-            lblDriverName = new Label();
             lblFormTitle = new Label();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
+            lblPickUpErrorMessage = new Label();
+            lblDeliveryErrorMessage = new Label();
+            lblScheduleDateErrorMessage = new Label();
+            lblEstimatedCostErrorMessage = new Label();
+            lblActualCostErrorMessage = new Label();
+            lblStatusErrorMessage = new Label();
+            lblLoadVoloumeErrorMessage = new Label();
+            lblLoadWeightErrorMessage = new Label();
+            ((System.ComponentModel.ISupportInitialize)nmrcLoadWeight).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)nmrcLoadVolume).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgTransportUnit).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgLoads).BeginInit();
             SuspendLayout();
@@ -190,14 +208,16 @@
             btnAddLoad.UseVisualStyleBackColor = false;
             btnAddLoad.Click += btnAddLoad_Click;
             // 
-            // numericUpDown2
+            // nmrcLoadWeight
             // 
-            numericUpDown2.Font = new Font("Segoe UI", 11.25F);
-            numericUpDown2.Location = new Point(666, 790);
-            numericUpDown2.Margin = new Padding(2, 3, 2, 3);
-            numericUpDown2.Name = "numericUpDown2";
-            numericUpDown2.Size = new Size(94, 27);
-            numericUpDown2.TabIndex = 208;
+            nmrcLoadWeight.DecimalPlaces = 2;
+            nmrcLoadWeight.Font = new Font("Segoe UI", 11.25F);
+            nmrcLoadWeight.Location = new Point(666, 790);
+            nmrcLoadWeight.Margin = new Padding(2, 3, 2, 3);
+            nmrcLoadWeight.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
+            nmrcLoadWeight.Name = "nmrcLoadWeight";
+            nmrcLoadWeight.Size = new Size(94, 27);
+            nmrcLoadWeight.TabIndex = 208;
             // 
             // lblWeight
             // 
@@ -210,14 +230,16 @@
             lblWeight.TabIndex = 207;
             lblWeight.Text = "Weight";
             // 
-            // numericUpDown1
+            // nmrcLoadVolume
             // 
-            numericUpDown1.Font = new Font("Segoe UI", 11.25F);
-            numericUpDown1.Location = new Point(470, 788);
-            numericUpDown1.Margin = new Padding(2, 3, 2, 3);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(110, 27);
-            numericUpDown1.TabIndex = 206;
+            nmrcLoadVolume.DecimalPlaces = 2;
+            nmrcLoadVolume.Font = new Font("Segoe UI", 11.25F);
+            nmrcLoadVolume.Location = new Point(470, 788);
+            nmrcLoadVolume.Margin = new Padding(2, 3, 2, 3);
+            nmrcLoadVolume.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
+            nmrcLoadVolume.Name = "nmrcLoadVolume";
+            nmrcLoadVolume.Size = new Size(110, 27);
+            nmrcLoadVolume.TabIndex = 206;
             // 
             // lblLoadVolume
             // 
@@ -250,75 +272,64 @@
             label1.TabIndex = 204;
             label1.Text = "Description";
             // 
-            // txtCustomerName
+            // txtCustomer
             // 
-            txtCustomerName.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCustomerName.Location = new Point(137, 153);
-            txtCustomerName.Margin = new Padding(2, 3, 2, 3);
-            txtCustomerName.Name = "txtCustomerName";
-            txtCustomerName.ReadOnly = true;
-            txtCustomerName.Size = new Size(216, 27);
-            txtCustomerName.TabIndex = 202;
-            txtCustomerName.Text = "Supun";
+            txtCustomer.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtCustomer.Location = new Point(137, 95);
+            txtCustomer.Margin = new Padding(2, 3, 2, 3);
+            txtCustomer.Name = "txtCustomer";
+            txtCustomer.ReadOnly = true;
+            txtCustomer.Size = new Size(216, 27);
+            txtCustomer.TabIndex = 202;
+            txtCustomer.Text = "Supun";
             // 
             // lblCustomerName
             // 
             lblCustomerName.AutoSize = true;
             lblCustomerName.Font = new Font("Segoe UI Semibold", 12F);
-            lblCustomerName.Location = new Point(20, 153);
+            lblCustomerName.Location = new Point(20, 95);
             lblCustomerName.Margin = new Padding(2, 0, 2, 0);
             lblCustomerName.Name = "lblCustomerName";
             lblCustomerName.Size = new Size(81, 21);
             lblCustomerName.TabIndex = 201;
             lblCustomerName.Text = "Customer";
             // 
-            // comboBox1
+            // cmbStatus
             // 
-            comboBox1.Font = new Font("Segoe UI", 11.25F);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(140, 786);
-            comboBox1.Margin = new Padding(2, 3, 2, 3);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(214, 28);
-            comboBox1.TabIndex = 200;
+            cmbStatus.Font = new Font("Segoe UI", 11.25F);
+            cmbStatus.FormattingEnabled = true;
+            cmbStatus.Items.AddRange(new object[] { "PENDING", "ACCEPTED", "IN_PROGRESS", "COMPLETED", "CANCELED", "REJECTED", "DELETED" });
+            cmbStatus.Location = new Point(140, 728);
+            cmbStatus.Margin = new Padding(2, 3, 2, 3);
+            cmbStatus.Name = "cmbStatus";
+            cmbStatus.Size = new Size(214, 28);
+            cmbStatus.TabIndex = 200;
             // 
             // lblStatus
             // 
             lblStatus.AutoSize = true;
             lblStatus.Font = new Font("Segoe UI Semibold", 12F);
-            lblStatus.Location = new Point(21, 788);
+            lblStatus.Location = new Point(21, 730);
             lblStatus.Margin = new Padding(2, 0, 2, 0);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(55, 21);
             lblStatus.TabIndex = 199;
             lblStatus.Text = "Status";
             // 
-            // btnAddCustomer
+            // txtActualCost
             // 
-            btnAddCustomer.Cursor = Cursors.Hand;
-            btnAddCustomer.Location = new Point(302, 95);
-            btnAddCustomer.Margin = new Padding(2, 3, 2, 3);
-            btnAddCustomer.Name = "btnAddCustomer";
-            btnAddCustomer.Size = new Size(50, 30);
-            btnAddCustomer.TabIndex = 198;
-            btnAddCustomer.Text = "Add";
-            btnAddCustomer.UseVisualStyleBackColor = true;
-            btnAddCustomer.Click += btnAddCustomer_Click;
-            // 
-            // textBox1
-            // 
-            textBox1.Font = new Font("Segoe UI", 11.25F);
-            textBox1.Location = new Point(140, 724);
-            textBox1.Margin = new Padding(2, 3, 2, 3);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(214, 27);
-            textBox1.TabIndex = 196;
+            txtActualCost.Font = new Font("Segoe UI", 11.25F);
+            txtActualCost.Location = new Point(140, 666);
+            txtActualCost.Margin = new Padding(2, 3, 2, 3);
+            txtActualCost.Name = "txtActualCost";
+            txtActualCost.Size = new Size(214, 27);
+            txtActualCost.TabIndex = 196;
             // 
             // lblAcutalCost
             // 
             lblAcutalCost.AutoSize = true;
             lblAcutalCost.Font = new Font("Segoe UI Semibold", 12F);
-            lblAcutalCost.Location = new Point(20, 724);
+            lblAcutalCost.Location = new Point(20, 666);
             lblAcutalCost.Margin = new Padding(2, 0, 2, 0);
             lblAcutalCost.Name = "lblAcutalCost";
             lblAcutalCost.Size = new Size(93, 21);
@@ -330,12 +341,61 @@
             dgTransportUnit.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgTransportUnit.BackgroundColor = Color.Azure;
             dgTransportUnit.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgTransportUnit.Columns.AddRange(new DataGridViewColumn[] { TId, TuId, VehicleId, VehicleRegNo, DriverId, AssistantId, Available });
             dgTransportUnit.Location = new Point(790, 95);
             dgTransportUnit.Margin = new Padding(2, 3, 2, 3);
             dgTransportUnit.Name = "dgTransportUnit";
             dgTransportUnit.RowHeadersWidth = 51;
+            dgTransportUnit.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgTransportUnit.Size = new Size(356, 599);
             dgTransportUnit.TabIndex = 195;
+            // 
+            // TId
+            // 
+            TId.DataPropertyName = "Id";
+            TId.HeaderText = "TId";
+            TId.Name = "TId";
+            TId.Visible = false;
+            // 
+            // TuId
+            // 
+            TuId.DataPropertyName = "TuId";
+            TuId.HeaderText = "TuId";
+            TuId.Name = "TuId";
+            // 
+            // VehicleId
+            // 
+            VehicleId.DataPropertyName = "VehicleId";
+            VehicleId.HeaderText = "VehicleId";
+            VehicleId.Name = "VehicleId";
+            VehicleId.Visible = false;
+            // 
+            // VehicleRegNo
+            // 
+            VehicleRegNo.DataPropertyName = "VehicleRegistrationNumber";
+            VehicleRegNo.HeaderText = "Vehicle Reg No";
+            VehicleRegNo.Name = "VehicleRegNo";
+            // 
+            // DriverId
+            // 
+            DriverId.DataPropertyName = "DriverId";
+            DriverId.HeaderText = "DriverId";
+            DriverId.Name = "DriverId";
+            DriverId.Visible = false;
+            // 
+            // AssistantId
+            // 
+            AssistantId.DataPropertyName = "AssistantId";
+            AssistantId.HeaderText = "AssistantId";
+            AssistantId.Name = "AssistantId";
+            AssistantId.Visible = false;
+            // 
+            // Available
+            // 
+            Available.DataPropertyName = "Available";
+            Available.HeaderText = "Available";
+            Available.Name = "Available";
+            Available.Visible = false;
             // 
             // lblTransportUnit
             // 
@@ -364,17 +424,57 @@
             dgLoads.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgLoads.BackgroundColor = Color.Azure;
             dgLoads.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgLoads.Columns.AddRange(new DataGridViewColumn[] { LoadID, Id, Description, Volume, Weight, JobId });
             dgLoads.Location = new Point(404, 95);
             dgLoads.Margin = new Padding(2, 3, 2, 3);
             dgLoads.Name = "dgLoads";
             dgLoads.RowHeadersWidth = 51;
+            dgLoads.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgLoads.Size = new Size(356, 599);
             dgLoads.TabIndex = 192;
+            // 
+            // LoadID
+            // 
+            LoadID.DataPropertyName = "LoadId";
+            LoadID.HeaderText = "Load ID";
+            LoadID.Name = "LoadID";
+            // 
+            // Id
+            // 
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Id";
+            Id.Name = "Id";
+            Id.Visible = false;
+            // 
+            // Description
+            // 
+            Description.DataPropertyName = "Description";
+            Description.HeaderText = "Description";
+            Description.Name = "Description";
+            // 
+            // Volume
+            // 
+            Volume.DataPropertyName = "Volume";
+            Volume.HeaderText = "Volume";
+            Volume.Name = "Volume";
+            // 
+            // Weight
+            // 
+            Weight.DataPropertyName = "Weight";
+            Weight.HeaderText = "Weight";
+            Weight.Name = "Weight";
+            // 
+            // JobId
+            // 
+            JobId.DataPropertyName = "JobId";
+            JobId.HeaderText = "JobId";
+            JobId.Name = "JobId";
+            JobId.Visible = false;
             // 
             // txtEstimatedCost
             // 
             txtEstimatedCost.Font = new Font("Segoe UI", 11.25F);
-            txtEstimatedCost.Location = new Point(140, 662);
+            txtEstimatedCost.Location = new Point(140, 604);
             txtEstimatedCost.Margin = new Padding(2, 3, 2, 3);
             txtEstimatedCost.Name = "txtEstimatedCost";
             txtEstimatedCost.Size = new Size(214, 27);
@@ -384,7 +484,7 @@
             // 
             lblEstimatedCost.AutoSize = true;
             lblEstimatedCost.Font = new Font("Segoe UI Semibold", 12F);
-            lblEstimatedCost.Location = new Point(20, 662);
+            lblEstimatedCost.Location = new Point(20, 604);
             lblEstimatedCost.Margin = new Padding(2, 0, 2, 0);
             lblEstimatedCost.Name = "lblEstimatedCost";
             lblEstimatedCost.Size = new Size(119, 21);
@@ -394,7 +494,7 @@
             // dtTmPckrScheduledDate
             // 
             dtTmPckrScheduledDate.Font = new Font("Segoe UI", 11.25F);
-            dtTmPckrScheduledDate.Location = new Point(140, 579);
+            dtTmPckrScheduledDate.Location = new Point(140, 521);
             dtTmPckrScheduledDate.Margin = new Padding(2, 3, 2, 3);
             dtTmPckrScheduledDate.Name = "dtTmPckrScheduledDate";
             dtTmPckrScheduledDate.Size = new Size(214, 27);
@@ -403,7 +503,7 @@
             // rchTxtDescription
             // 
             rchTxtDescription.Font = new Font("Segoe UI", 11.25F);
-            rchTxtDescription.Location = new Point(140, 441);
+            rchTxtDescription.Location = new Point(139, 405);
             rchTxtDescription.Margin = new Padding(2, 3, 2, 3);
             rchTxtDescription.Name = "rchTxtDescription";
             rchTxtDescription.Size = new Size(214, 87);
@@ -413,7 +513,7 @@
             // rchTxtDelivery
             // 
             rchTxtDelivery.Font = new Font("Segoe UI", 11.25F);
-            rchTxtDelivery.Location = new Point(140, 323);
+            rchTxtDelivery.Location = new Point(139, 278);
             rchTxtDelivery.Margin = new Padding(2, 3, 2, 3);
             rchTxtDelivery.Name = "rchTxtDelivery";
             rchTxtDelivery.Size = new Size(214, 87);
@@ -423,7 +523,7 @@
             // rchTxtPickup
             // 
             rchTxtPickup.Font = new Font("Segoe UI", 11.25F);
-            rchTxtPickup.Location = new Point(140, 212);
+            rchTxtPickup.Location = new Point(140, 154);
             rchTxtPickup.Margin = new Padding(2, 3, 2, 3);
             rchTxtPickup.Name = "rchTxtPickup";
             rchTxtPickup.Size = new Size(214, 87);
@@ -436,7 +536,7 @@
             btnCancel.Cursor = Cursors.Hand;
             btnCancel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnCancel.ForeColor = SystemColors.WindowText;
-            btnCancel.Location = new Point(258, 846);
+            btnCancel.Location = new Point(271, 790);
             btnCancel.Margin = new Padding(2, 3, 2, 3);
             btnCancel.Name = "btnCancel";
             btnCancel.Padding = new Padding(0, 6, 0, 6);
@@ -452,7 +552,7 @@
             btnUpdate.Cursor = Cursors.Hand;
             btnUpdate.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnUpdate.ForeColor = Color.White;
-            btnUpdate.Location = new Point(140, 846);
+            btnUpdate.Location = new Point(153, 790);
             btnUpdate.Margin = new Padding(2, 3, 2, 3);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Padding = new Padding(0, 6, 0, 6);
@@ -466,7 +566,7 @@
             // 
             lblScheduledDate.AutoSize = true;
             lblScheduledDate.Font = new Font("Segoe UI Semibold", 12F);
-            lblScheduledDate.Location = new Point(20, 579);
+            lblScheduledDate.Location = new Point(20, 521);
             lblScheduledDate.Margin = new Padding(2, 0, 2, 0);
             lblScheduledDate.Name = "lblScheduledDate";
             lblScheduledDate.Size = new Size(125, 21);
@@ -477,7 +577,7 @@
             // 
             lblDescription.AutoSize = true;
             lblDescription.Font = new Font("Segoe UI Semibold", 12F);
-            lblDescription.Location = new Point(20, 438);
+            lblDescription.Location = new Point(19, 402);
             lblDescription.Margin = new Padding(2, 0, 2, 0);
             lblDescription.Name = "lblDescription";
             lblDescription.Size = new Size(94, 21);
@@ -488,7 +588,7 @@
             // 
             lblDelivery.AutoSize = true;
             lblDelivery.Font = new Font("Segoe UI Semibold", 12F);
-            lblDelivery.Location = new Point(20, 321);
+            lblDelivery.Location = new Point(19, 276);
             lblDelivery.Margin = new Padding(2, 0, 2, 0);
             lblDelivery.Name = "lblDelivery";
             lblDelivery.Size = new Size(70, 21);
@@ -499,32 +599,12 @@
             // 
             lblPickup.AutoSize = true;
             lblPickup.Font = new Font("Segoe UI Semibold", 12F);
-            lblPickup.Location = new Point(20, 210);
+            lblPickup.Location = new Point(20, 152);
             lblPickup.Margin = new Padding(2, 0, 2, 0);
             lblPickup.Name = "lblPickup";
             lblPickup.Size = new Size(58, 21);
             lblPickup.TabIndex = 184;
             lblPickup.Text = "Pickup";
-            // 
-            // txtCustomerId
-            // 
-            txtCustomerId.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCustomerId.Location = new Point(137, 95);
-            txtCustomerId.Margin = new Padding(2, 3, 2, 3);
-            txtCustomerId.Name = "txtCustomerId";
-            txtCustomerId.Size = new Size(160, 27);
-            txtCustomerId.TabIndex = 179;
-            // 
-            // lblDriverName
-            // 
-            lblDriverName.AutoSize = true;
-            lblDriverName.Font = new Font("Segoe UI Semibold", 12F);
-            lblDriverName.Location = new Point(20, 95);
-            lblDriverName.Margin = new Padding(2, 0, 2, 0);
-            lblDriverName.Name = "lblDriverName";
-            lblDriverName.Size = new Size(101, 21);
-            lblDriverName.TabIndex = 178;
-            lblDriverName.Text = "Customer ID";
             // 
             // lblFormTitle
             // 
@@ -538,6 +618,86 @@
             lblFormTitle.TabIndex = 177;
             lblFormTitle.Text = "Update Job #JOB20250720001";
             // 
+            // lblPickUpErrorMessage
+            // 
+            lblPickUpErrorMessage.AutoSize = true;
+            lblPickUpErrorMessage.ForeColor = Color.Red;
+            lblPickUpErrorMessage.Location = new Point(140, 244);
+            lblPickUpErrorMessage.Name = "lblPickUpErrorMessage";
+            lblPickUpErrorMessage.Size = new Size(81, 15);
+            lblPickUpErrorMessage.TabIndex = 217;
+            lblPickUpErrorMessage.Text = "error message";
+            // 
+            // lblDeliveryErrorMessage
+            // 
+            lblDeliveryErrorMessage.AutoSize = true;
+            lblDeliveryErrorMessage.ForeColor = Color.Red;
+            lblDeliveryErrorMessage.Location = new Point(137, 368);
+            lblDeliveryErrorMessage.Name = "lblDeliveryErrorMessage";
+            lblDeliveryErrorMessage.Size = new Size(81, 15);
+            lblDeliveryErrorMessage.TabIndex = 218;
+            lblDeliveryErrorMessage.Text = "error message";
+            // 
+            // lblScheduleDateErrorMessage
+            // 
+            lblScheduleDateErrorMessage.AutoSize = true;
+            lblScheduleDateErrorMessage.ForeColor = Color.Red;
+            lblScheduleDateErrorMessage.Location = new Point(140, 560);
+            lblScheduleDateErrorMessage.Name = "lblScheduleDateErrorMessage";
+            lblScheduleDateErrorMessage.Size = new Size(81, 15);
+            lblScheduleDateErrorMessage.TabIndex = 219;
+            lblScheduleDateErrorMessage.Text = "error message";
+            // 
+            // lblEstimatedCostErrorMessage
+            // 
+            lblEstimatedCostErrorMessage.AutoSize = true;
+            lblEstimatedCostErrorMessage.ForeColor = Color.Red;
+            lblEstimatedCostErrorMessage.Location = new Point(140, 634);
+            lblEstimatedCostErrorMessage.Name = "lblEstimatedCostErrorMessage";
+            lblEstimatedCostErrorMessage.Size = new Size(81, 15);
+            lblEstimatedCostErrorMessage.TabIndex = 220;
+            lblEstimatedCostErrorMessage.Text = "error message";
+            // 
+            // lblActualCostErrorMessage
+            // 
+            lblActualCostErrorMessage.AutoSize = true;
+            lblActualCostErrorMessage.ForeColor = Color.Red;
+            lblActualCostErrorMessage.Location = new Point(139, 696);
+            lblActualCostErrorMessage.Name = "lblActualCostErrorMessage";
+            lblActualCostErrorMessage.Size = new Size(81, 15);
+            lblActualCostErrorMessage.TabIndex = 221;
+            lblActualCostErrorMessage.Text = "error message";
+            // 
+            // lblStatusErrorMessage
+            // 
+            lblStatusErrorMessage.AutoSize = true;
+            lblStatusErrorMessage.ForeColor = Color.Red;
+            lblStatusErrorMessage.Location = new Point(140, 759);
+            lblStatusErrorMessage.Name = "lblStatusErrorMessage";
+            lblStatusErrorMessage.Size = new Size(81, 15);
+            lblStatusErrorMessage.TabIndex = 222;
+            lblStatusErrorMessage.Text = "error message";
+            // 
+            // lblLoadVoloumeErrorMessage
+            // 
+            lblLoadVoloumeErrorMessage.AutoSize = true;
+            lblLoadVoloumeErrorMessage.ForeColor = Color.Red;
+            lblLoadVoloumeErrorMessage.Location = new Point(470, 818);
+            lblLoadVoloumeErrorMessage.Name = "lblLoadVoloumeErrorMessage";
+            lblLoadVoloumeErrorMessage.Size = new Size(81, 15);
+            lblLoadVoloumeErrorMessage.TabIndex = 223;
+            lblLoadVoloumeErrorMessage.Text = "error message";
+            // 
+            // lblLoadWeightErrorMessage
+            // 
+            lblLoadWeightErrorMessage.AutoSize = true;
+            lblLoadWeightErrorMessage.ForeColor = Color.Red;
+            lblLoadWeightErrorMessage.Location = new Point(666, 820);
+            lblLoadWeightErrorMessage.Name = "lblLoadWeightErrorMessage";
+            lblLoadWeightErrorMessage.Size = new Size(81, 15);
+            lblLoadWeightErrorMessage.TabIndex = 224;
+            lblLoadWeightErrorMessage.Text = "error message";
+            // 
             // UpdateJobForm
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -545,6 +705,14 @@
             AutoScroll = true;
             BackColor = Color.Azure;
             ClientSize = new Size(1180, 923);
+            Controls.Add(lblLoadWeightErrorMessage);
+            Controls.Add(lblLoadVoloumeErrorMessage);
+            Controls.Add(lblStatusErrorMessage);
+            Controls.Add(lblActualCostErrorMessage);
+            Controls.Add(lblEstimatedCostErrorMessage);
+            Controls.Add(lblScheduleDateErrorMessage);
+            Controls.Add(lblDeliveryErrorMessage);
+            Controls.Add(lblPickUpErrorMessage);
             Controls.Add(btnRemoveTransportUnit);
             Controls.Add(btnClearTransportUnit);
             Controls.Add(btnAddTransportUnit);
@@ -553,18 +721,17 @@
             Controls.Add(btnRemoveLoad);
             Controls.Add(btnClearLoad);
             Controls.Add(btnAddLoad);
-            Controls.Add(numericUpDown2);
+            Controls.Add(nmrcLoadWeight);
             Controls.Add(lblWeight);
-            Controls.Add(numericUpDown1);
+            Controls.Add(nmrcLoadVolume);
             Controls.Add(lblLoadVolume);
             Controls.Add(txtLoadDescription);
             Controls.Add(label1);
-            Controls.Add(txtCustomerName);
+            Controls.Add(txtCustomer);
             Controls.Add(lblCustomerName);
-            Controls.Add(comboBox1);
+            Controls.Add(cmbStatus);
             Controls.Add(lblStatus);
-            Controls.Add(btnAddCustomer);
-            Controls.Add(textBox1);
+            Controls.Add(txtActualCost);
             Controls.Add(lblAcutalCost);
             Controls.Add(dgTransportUnit);
             Controls.Add(lblTransportUnit);
@@ -582,16 +749,15 @@
             Controls.Add(lblDescription);
             Controls.Add(lblDelivery);
             Controls.Add(lblPickup);
-            Controls.Add(txtCustomerId);
-            Controls.Add(lblDriverName);
             Controls.Add(lblFormTitle);
             Margin = new Padding(2, 3, 2, 3);
             MaximizeBox = false;
             Name = "UpdateJobForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Update Job";
-            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
+            Load += UpdateJobForm_Load;
+            ((System.ComponentModel.ISupportInitialize)nmrcLoadWeight).EndInit();
+            ((System.ComponentModel.ISupportInitialize)nmrcLoadVolume).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgTransportUnit).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgLoads).EndInit();
             ResumeLayout(false);
@@ -608,18 +774,17 @@
         private Button btnRemoveLoad;
         private Button btnClearLoad;
         private Button btnAddLoad;
-        private NumericUpDown numericUpDown2;
+        private NumericUpDown nmrcLoadWeight;
         private Label lblWeight;
-        private NumericUpDown numericUpDown1;
+        private NumericUpDown nmrcLoadVolume;
         private Label lblLoadVolume;
         private TextBox txtLoadDescription;
         private Label label1;
-        private TextBox txtCustomerName;
+        private TextBox txtCustomer;
         private Label lblCustomerName;
-        private ComboBox comboBox1;
+        private ComboBox cmbStatus;
         private Label lblStatus;
-        private Button btnAddCustomer;
-        private TextBox textBox1;
+        private TextBox txtActualCost;
         private Label lblAcutalCost;
         private DataGridView dgTransportUnit;
         private Label lblTransportUnit;
@@ -637,8 +802,27 @@
         private Label lblDescription;
         private Label lblDelivery;
         private Label lblPickup;
-        private TextBox txtCustomerId;
-        private Label lblDriverName;
         private Label lblFormTitle;
+        private Label lblPickUpErrorMessage;
+        private Label lblDeliveryErrorMessage;
+        private Label lblScheduleDateErrorMessage;
+        private Label lblEstimatedCostErrorMessage;
+        private Label lblActualCostErrorMessage;
+        private Label lblStatusErrorMessage;
+        private Label lblLoadVoloumeErrorMessage;
+        private Label lblLoadWeightErrorMessage;
+        private DataGridViewTextBoxColumn TId;
+        private DataGridViewTextBoxColumn TuId;
+        private DataGridViewTextBoxColumn VehicleId;
+        private DataGridViewTextBoxColumn VehicleRegNo;
+        private DataGridViewTextBoxColumn DriverId;
+        private DataGridViewTextBoxColumn AssistantId;
+        private DataGridViewTextBoxColumn Available;
+        private DataGridViewTextBoxColumn LoadID;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn Description;
+        private DataGridViewTextBoxColumn Volume;
+        private DataGridViewTextBoxColumn Weight;
+        private DataGridViewTextBoxColumn JobId;
     }
 }

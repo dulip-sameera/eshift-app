@@ -18,7 +18,7 @@ namespace eshift.Dao.Impl
         public List<UserModel> GetAllUsers()
         {
             var users = new List<UserModel>();
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT id, username, password, role FROM user";
             try
             {
@@ -47,7 +47,7 @@ namespace eshift.Dao.Impl
 
         public UserModel? GetUserById(int id)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT id, username, password, role FROM user WHERE id = @id LIMIT 1";
             try
             {
@@ -76,7 +76,7 @@ namespace eshift.Dao.Impl
 
         public UserModel? GetUserByUsername(string username)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT id, username, password, role FROM user WHERE username = @username LIMIT 1";
             try
             {
@@ -106,7 +106,7 @@ namespace eshift.Dao.Impl
         public List<UserModel> FilterUsersByUsername(string searchString)
         {
             var users = new List<UserModel>();
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "SELECT id, username, password, role FROM user WHERE username LIKE @searchString";
             try
             {
@@ -136,7 +136,7 @@ namespace eshift.Dao.Impl
 
         public UserModel CreateUser(UserModel userModel)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "INSERT INTO user (username, password, role) VALUES (@username, @password, @role)";
             try
             {
@@ -157,7 +157,7 @@ namespace eshift.Dao.Impl
 
         public UserModel UpdateUser(UserModel userModel)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "UPDATE user SET password = @password, username = @username WHERE id = @id";
             try
             {
@@ -178,7 +178,7 @@ namespace eshift.Dao.Impl
 
         public void DeleteUserByUsername(string username)
         {
-            var conn = DatabaseConnection.Instance.Connection;
+            using var conn = DatabaseConnection.Instance.Connection;
             string query = "DELETE FROM user WHERE username = @username";
             try
             {

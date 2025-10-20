@@ -45,6 +45,12 @@
             btnUpdate = new Button();
             lblFirstName = new Label();
             lblFormTitle = new Label();
+            lblFirstNameErrorMessage = new Label();
+            lblLastNameErrorMessage = new Label();
+            lblEmailErrorMessage = new Label();
+            lblPhoneErrorMessage = new Label();
+            lblCityErrorMessage = new Label();
+            lblZipCodeErrorMessage = new Label();
             SuspendLayout();
             // 
             // txtZipCode
@@ -216,12 +222,78 @@
             lblFormTitle.TabIndex = 53;
             lblFormTitle.Text = "Account Details";
             // 
+            // lblFirstNameErrorMessage
+            // 
+            lblFirstNameErrorMessage.AutoSize = true;
+            lblFirstNameErrorMessage.ForeColor = Color.Red;
+            lblFirstNameErrorMessage.Location = new Point(217, 108);
+            lblFirstNameErrorMessage.Name = "lblFirstNameErrorMessage";
+            lblFirstNameErrorMessage.Size = new Size(81, 15);
+            lblFirstNameErrorMessage.TabIndex = 70;
+            lblFirstNameErrorMessage.Text = "Error Message";
+            // 
+            // lblLastNameErrorMessage
+            // 
+            lblLastNameErrorMessage.AutoSize = true;
+            lblLastNameErrorMessage.ForeColor = Color.Red;
+            lblLastNameErrorMessage.Location = new Point(217, 161);
+            lblLastNameErrorMessage.Name = "lblLastNameErrorMessage";
+            lblLastNameErrorMessage.Size = new Size(81, 15);
+            lblLastNameErrorMessage.TabIndex = 71;
+            lblLastNameErrorMessage.Text = "Error Message";
+            // 
+            // lblEmailErrorMessage
+            // 
+            lblEmailErrorMessage.AutoSize = true;
+            lblEmailErrorMessage.ForeColor = Color.Red;
+            lblEmailErrorMessage.Location = new Point(217, 225);
+            lblEmailErrorMessage.Name = "lblEmailErrorMessage";
+            lblEmailErrorMessage.Size = new Size(81, 15);
+            lblEmailErrorMessage.TabIndex = 72;
+            lblEmailErrorMessage.Text = "Error Message";
+            // 
+            // lblPhoneErrorMessage
+            // 
+            lblPhoneErrorMessage.AutoSize = true;
+            lblPhoneErrorMessage.ForeColor = Color.Red;
+            lblPhoneErrorMessage.Location = new Point(217, 283);
+            lblPhoneErrorMessage.Name = "lblPhoneErrorMessage";
+            lblPhoneErrorMessage.Size = new Size(81, 15);
+            lblPhoneErrorMessage.TabIndex = 73;
+            lblPhoneErrorMessage.Text = "Error Message";
+            // 
+            // lblCityErrorMessage
+            // 
+            lblCityErrorMessage.AutoSize = true;
+            lblCityErrorMessage.ForeColor = Color.Red;
+            lblCityErrorMessage.Location = new Point(217, 462);
+            lblCityErrorMessage.Name = "lblCityErrorMessage";
+            lblCityErrorMessage.Size = new Size(81, 15);
+            lblCityErrorMessage.TabIndex = 74;
+            lblCityErrorMessage.Text = "Error Message";
+            // 
+            // lblZipCodeErrorMessage
+            // 
+            lblZipCodeErrorMessage.AutoSize = true;
+            lblZipCodeErrorMessage.ForeColor = Color.Red;
+            lblZipCodeErrorMessage.Location = new Point(217, 532);
+            lblZipCodeErrorMessage.Name = "lblZipCodeErrorMessage";
+            lblZipCodeErrorMessage.Size = new Size(81, 15);
+            lblZipCodeErrorMessage.TabIndex = 75;
+            lblZipCodeErrorMessage.Text = "Error Message";
+            // 
             // CustomerAccountForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Azure;
             ClientSize = new Size(548, 630);
+            Controls.Add(lblZipCodeErrorMessage);
+            Controls.Add(lblCityErrorMessage);
+            Controls.Add(lblPhoneErrorMessage);
+            Controls.Add(lblEmailErrorMessage);
+            Controls.Add(lblLastNameErrorMessage);
+            Controls.Add(lblFirstNameErrorMessage);
             Controls.Add(txtZipCode);
             Controls.Add(lblZipCode);
             Controls.Add(txtCity);
@@ -243,6 +315,7 @@
             Name = "CustomerAccountForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Account Details";
+            Load += CustomerAccountForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -266,5 +339,11 @@
         private Button btnUpdate;
         private Label lblFirstName;
         private Label lblFormTitle;
+        private Label lblFirstNameErrorMessage;
+        private Label lblLastNameErrorMessage;
+        private Label lblEmailErrorMessage;
+        private Label lblPhoneErrorMessage;
+        private Label lblCityErrorMessage;
+        private Label lblZipCodeErrorMessage;
     }
 }
